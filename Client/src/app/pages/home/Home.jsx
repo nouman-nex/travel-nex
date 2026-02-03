@@ -4,6 +4,11 @@ import Hero from "../../components/home/Hero";
 import Feature from "../../components/home/Feature";
 import Destination from "../../components/home/Destination";
 import About from "../../components/home/About";
+import CTA from "../../components/home/CTA";
+import PopularDestination from "../../components/home/PopularDestination";
+import DealsOffer from "../../components/home/DealsOffer";
+import Testimonials from "../../components/home/Testimonials";
+import TravelFeature from "../../components/home/TravelFeature";
 
 export default function Home() {
   return (
@@ -13,6 +18,11 @@ export default function Home() {
       <Feature />
       <Destination />
       <About />
+      <CTA />
+      <PopularDestination />
+      <DealsOffer />
+      <Testimonials />
+      <TravelFeature />
     </div>
   );
 }

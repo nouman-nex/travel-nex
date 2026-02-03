@@ -74,8 +74,7 @@ export default function Navbar() {
                 <div className="header-button mt-4">
                   <a href="contact.html" className="theme-btn">
                     {" "}
-                    Request A Quote{" "}
-                    <i className="fa-sharp fa-regular fa-arrow-right"></i>
+                    Request A Quote <i className="fa-solid fa-arrow-right"></i>
                   </a>
                 </div>
                 <div className="social-icon d-flex align-items-center">
@@ -268,78 +267,76 @@ export default function Navbar() {
                           </li>
                           <li>
                             <a href="destination-details.html">
-                              Destinations
+                              Services
                               <i className="fa-solid fa-chevron-down"></i>
                             </a>
                             <ul className="submenu">
                               <li>
-                                <a href="destination.html">our Destination</a>
+                                <a href="destination.html">Travel Insurance</a>
+                              </li>
+                              <li>
+                                <a href="destination-details.html">Ticketing</a>
                               </li>
                               <li>
                                 <a href="destination-details.html">
-                                  Destination Details
+                                  Hotel Booking
                                 </a>
                               </li>
                             </ul>
                           </li>
                           <li>
                             <a href="tour-details.html">
-                              Tour
+                              Spiritual Journey
                               <i className="fa-solid fa-chevron-down"></i>
                             </a>
                             <ul className="submenu">
                               <li>
-                                <a href="tour.html">Our Tour</a>
+                                <a href="tour.html">Umrah</a>
                               </li>
                               <li>
-                                <a href="tour-details.html">Tour Details</a>
+                                <a href="tour-details.html">Hajj</a>
+                              </li>
+                              <li>
+                                <a href="tour-details.html">Ziyarat</a>
                               </li>
                             </ul>
                           </li>
                           <li className="has-dropdown">
                             <a href="news.html">
-                              Pages
+                              Visas
                               <i className="fa-solid fa-chevron-down"></i>
                             </a>
                             <ul className="submenu">
                               <li>
-                                <a href="activities.html">Activities</a>
+                                <a href="activities.html">Visit Visa</a>
                               </li>
                               <li>
-                                <a href="activities-details.html">
-                                  Activities Details
-                                </a>
+                                <a href="activities-details.html">Study Visa</a>
                               </li>
                               <li>
-                                <a href="team.html">Our Team</a>
-                              </li>
-                              <li>
-                                <a href="team-details.html">Team Details</a>
-                              </li>
-                              <li>
-                                <a href="faq.html">Our Faq</a>
+                                <a href="team.html">Work Visa</a>
                               </li>
                             </ul>
                           </li>
                           <li>
-                            <a href="news-details.html">
-                              Blog
+                            <a href="news-details.html">Blog</a>
+                          </li>
+                          <li>
+                            <a href="contact.html">Translation</a>
+                          </li>
+                          <li className="has-dropdown">
+                            <a href="contact.html">
+                              attestation
                               <i className="fa-solid fa-chevron-down"></i>
                             </a>
                             <ul className="submenu">
                               <li>
-                                <a href="news.html">Blog Grid</a>
+                                <a href="activities.html">MOFA</a>
                               </li>
                               <li>
-                                <a href="news-classic.html">Blog Classic</a>
-                              </li>
-                              <li>
-                                <a href="news-details.html">Blog Details</a>
+                                <a href="activities-details.html">Apostille</a>
                               </li>
                             </ul>
-                          </li>
-                          <li>
-                            <a href="contact.html">Contact Us</a>
                           </li>
                         </ul>
                       </nav>
