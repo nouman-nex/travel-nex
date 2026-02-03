@@ -9,6 +9,7 @@ import PopularDestination from "../../components/home/PopularDestination";
 import DealsOffer from "../../components/home/DealsOffer";
 import Testimonials from "../../components/home/Testimonials";
 import TravelFeature from "../../components/home/TravelFeature";
+import Footer from "../../components/home/Footer";
 
 export default function Home() {
   return (
@@ -23,6 +24,7 @@ export default function Home() {
       <DealsOffer />
       <Testimonials />
       <TravelFeature />
+      <Footer />
     </div>
   );
 }

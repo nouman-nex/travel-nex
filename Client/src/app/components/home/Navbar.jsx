@@ -32,7 +32,7 @@ export default function Navbar() {
                 <ul>
                   <li className="d-flex align-items-center">
                     <div className="offcanvas__contact-icon">
-                      <i className="fal fa-map-marker-alt"></i>
+                      <i className="fas fa-map-marker-alt"></i>
                     </div>
                     <div className="offcanvas__contact-text">
                       <a target="_blank" href="#">
@@ -42,32 +42,30 @@ export default function Navbar() {
                   </li>
                   <li className="d-flex align-items-center">
                     <div className="offcanvas__contact-icon mr-15">
-                      <i className="fal fa-envelope"></i>
+                      <i className="fas fa-envelope"></i>
                     </div>
                     <div className="offcanvas__contact-text">
-                      <a href="mailto:info@example.com">
-                        <span className="mailto:info@example.com">
-                          info@example.com
-                        </span>
+                      <a href="mailto:info@cfdtravels.com">
+                        <span>info@cfdtravels.com</span>
                       </a>
                     </div>
                   </li>
                   <li className="d-flex align-items-center">
                     <div className="offcanvas__contact-icon mr-15">
-                      <i className="fal fa-clock"></i>
+                      <i className="fas fa-clock"></i>
                     </div>
                     <div className="offcanvas__contact-text">
                       <a target="_blank" href="#">
-                        Mod-friday, 09am -05pm
+                        Mon-friday, 09am -05pm
                       </a>
                     </div>
                   </li>
                   <li className="d-flex align-items-center">
                     <div className="offcanvas__contact-icon mr-15">
-                      <i className="far fa-phone"></i>
+                      <i className="fas fa-phone"></i>
                     </div>
                     <div className="offcanvas__contact-text">
-                      <a href="tel:+11002345909">+11002345909</a>
+                      <a href="tel:+923453866681">+92 345 3866681</a>
                     </div>
                   </li>
                 </ul>
@@ -120,15 +118,15 @@ export default function Navbar() {
               <ul className="top-right">
                 <li>
                   <i className="fa-regular fa-envelope"></i>
-                  <a href="mailto:info@touron.com">info@touron.com</a>
+                  <a href="mailto:info@cfdtravels.com">info@cfdtravels.com</a>
                 </li>
                 <li>
                   <i className="fa-regular fa-clock"></i>
-                  Sun to Friday: 8.00 am - 7.00 pm, Austria
+                  Mon to Friday: 8.00 am - 7.00 pm, Austria
                 </li>
                 <li>
                   <i className="fa-solid fa-phone"></i>
-                  <a href="tel:+256214203215">+256 214 203 215</a>
+                  <a href="tel:+923453866681">+92 345 3866681</a>
                 </li>
               </ul>
             </div>
@@ -156,9 +154,9 @@ export default function Navbar() {
                           <li className="has-dropdown active menu-thumb">
                             <a href="index.html">
                               Home
-                              <i className="fa-solid fa-chevron-down"></i>
+                              {/* <i className="fa-solid fa-chevron-down"></i> */}
                             </a>
-                            <ul className="submenu has-homemenu">
+                            {/* <ul className="submenu has-homemenu">
                               <li>
                                 <div className="homemenu-items">
                                   <div className="homemenu">
@@ -244,24 +242,9 @@ export default function Navbar() {
                                   </div>
                                 </div>
                               </li>
-                            </ul>
+                            </ul> */}
                           </li>
-                          <li className="has-dropdown active d-xl-none">
-                            <a href="team.html" className="border-none">
-                              Home
-                            </a>
-                            <ul className="submenu">
-                              <li>
-                                <a href="index.html">Home 01</a>
-                              </li>
-                              <li>
-                                <a href="index-2.html">Home 02</a>
-                              </li>
-                              <li>
-                                <a href="index-3.html">Home 03</a>
-                              </li>
-                            </ul>
-                          </li>
+                          {/* Mobile-only Home dropdown removed */}
                           <li>
                             <a href="about.html">About Us</a>
                           </li>
@@ -326,7 +309,7 @@ export default function Navbar() {
                           </li>
                           <li className="has-dropdown">
                             <a href="contact.html">
-                              attestation
+                              Attestation
                               <i className="fa-solid fa-chevron-down"></i>
                             </a>
                             <ul className="submenu">
@@ -342,9 +325,6 @@ export default function Navbar() {
                       </nav>
                     </div>
                   </div>
-                  <a href="#0" className="search-trigger search-icon">
-                    <i className="fa-solid fa-magnifying-glass"></i>
-                  </a>
                   <a href="contact.html" className="theme-btn">
                     {" "}
                     Request A Quote <i className="fa-solid fa-arrow-right"></i>
