@@ -10,12 +10,14 @@ import DealsOffer from "../../components/home/DealsOffer";
 import Testimonials from "../../components/home/Testimonials";
 import TravelFeature from "../../components/home/TravelFeature";
 import Footer from "../../components/home/Footer";
+import SearchEngine from "../../components/search/SearchEngine";
 
 export default function Home() {
   return (
     <div>
       <Navbar />
       <Hero />
+      <SearchEngine />
       <Feature />
       <Destination />
       <About />

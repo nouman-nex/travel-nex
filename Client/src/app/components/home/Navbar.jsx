@@ -72,7 +72,7 @@ export default function Navbar() {
                 <div className="header-button mt-4">
                   <a href="contact.html" className="theme-btn">
                     {" "}
-                    Request A Quote <i className="fa-solid fa-arrow-right"></i>
+                    Start Here <i className="fa-solid fa-arrow-right"></i>
                   </a>
                 </div>
                 <div className="social-icon d-flex align-items-center">
@@ -327,7 +327,7 @@ export default function Navbar() {
                   </div>
                   <a href="contact.html" className="theme-btn">
                     {" "}
-                    Request A Quote <i className="fa-solid fa-arrow-right"></i>
+                    Start Here <i className="fa-solid fa-arrow-right"></i>
                   </a>
                   <div className="header__hamburger d-xl-none my-auto">
                     <div className="sidebar__toggle">
