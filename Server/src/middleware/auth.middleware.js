@@ -1,4 +1,4 @@
-const JwtService = require("../services/jwtService");
+const JwtService = require("../services/jwtService.service");
 const User = require("../models/User");
 
 // Protect routes

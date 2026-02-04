@@ -1,7 +1,7 @@
 const User = require("../../models/User");
 const { registerSchema, loginSchema } = require("../../DTOs/userDTOs");
 const bcrypt = require("bcryptjs");
-const JwtService = require("../../services/jwtService");
+const JwtService = require("../../services/jwtService.service");
 
 const register = async (req, res) => {
   const { error } = registerSchema.validate(req.body);

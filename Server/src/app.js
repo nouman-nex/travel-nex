@@ -10,7 +10,7 @@ const notFound = require("./middleware/notFound.middleware");
 const { serverConfigs } = require("./config/vars");
 
 // Route imports
-const authRoutes = require("./routes/auth");
+const authRoutes = require("./routes/user/auth.route");
 
 const app = express();
 

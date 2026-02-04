@@ -4,8 +4,8 @@ const {
   login,
   getMe,
   logout,
-} = require("../controllers/user/authController");
-const { protect } = require("../middleware/auth.middleware");
+} = require("../../controllers/user/authController.controller");
+const { protect } = require("../../middleware/auth.middleware");
 
 const router = express.Router();
 
