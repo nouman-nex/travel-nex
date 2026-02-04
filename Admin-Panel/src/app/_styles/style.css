@@ -1,0 +1,240 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.font-arial {
+  font-family: Arial, sans-serif !important;
+}
+
+.bottom-tilt {
+  clip-path: polygon(0 0, 100% 0, 100% 30%, 0 100%);
+}
+
+.background-div {
+  background-image: url("../../../public/assets/images/frontweb/bliss-bg.png");
+  background-size: cover;
+  background-position: center;
+}
+.product-value-bg {
+  background-image: url("../../../public/assets/images/frontweb/logo192.png");
+  background-size: cover;
+  background-position: center;
+}
+.header-bg {
+  background-image: url("../../../public/assets/images/frontweb/next-drawv5.png");
+  background-size: cover;
+  background-position: center;
+  border-radius: 2%;
+}
+.about-bg {
+  background-image: url("../../../public/assets/images/frontweb/upcoming-bg.png");
+  background-size: cover;
+  background-position: center;
+  height: 13%;
+  width: 100%;
+}
+.bg1 {
+  background-image: url("../../../public/assets/images/frontweb/bg1.png");
+  background-size: cover;
+  background-position: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  background-blend-mode: multiply;
+  height: 20%;
+  width: 100%;
+}
+.howtoenter-bg1 {
+  background-image: url("../../../public/assets/images/frontweb/bg2.png");
+  background-size: cover;
+  background-position: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  background-blend-mode: multiply;
+  height: 30%;
+  width: 100%;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  min-width: 0;
+  width: 100%;
+  height: 100%;
+}
+.bottom-tilt {
+  clip-path: polygon(0 0, 100% 0, 100% 30%, 0 100%);
+}
+.gender-container-screenshot {
+  display: flex;
+  gap: 1px;
+  width: fit-content;
+  background-color: #e5e7eb;
+  border-radius: 40px;
+}
+.gender-container {
+  display: flex;
+  gap: 1px;
+  width: fit-content;
+}
+
+.gender-button {
+  border: none;
+  background: transparent;
+  color: black;
+  font-size: 12px;
+  padding: 12px 16px;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+.daily-button {
+  border: none;
+  background: #ffffff;
+  color: black;
+  font-size: 12px;
+  padding: 6px 16px;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+.gender-button.active {
+  background: #ffffff;
+  color: #000000;
+  font-weight: 600;
+}
+
+.steps-container {
+  max-width: 400px;
+  margin: auto;
+  padding: 20px;
+  position: relative;
+}
+
+.step-wrapper {
+  position: relative;
+}
+
+.step-item {
+  display: flex;
+  align-items: center;
+  background-color: #f3f3f3;
+  padding: 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.step-item:hover {
+  background-color: #e0e0e0;
+}
+
+.step-item.selected {
+  background-color: #d1e7ff;
+  border-left: 4px solid #007bff;
+}
+
+.checkbox {
+  width: 20px;
+  height: 20px;
+  border: 2px solid gray;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  position: relative;
+  z-index: 2;
+  background-color: white;
+}
+
+.step-item.selected .checkbox {
+  border-color: #007bff;
+  background-color: #007bff;
+}
+
+.checkmark {
+  color: white;
+  font-size: 14px;
+}
+
+.step-title {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.step-description {
+  font-size: 12px;
+  color: #666;
+}
+
+/* Vertical Line */
+.vertical-line {
+  position: absolute;
+  left: 9px;
+  top: -15px;
+  width: 2px;
+  height: 30px;
+  background-color: #ccc;
+  z-index: 1;
+}
+
+.step-wrapper:first-child .vertical-line {
+  display: none;
+}
+
+.timeline-line {
+  position: absolute;
+  left: 10px;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background-color: #ddd;
+}
+
+/* Step Circles */
+.step-circle {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid gray;
+  background-color: white;
+  position: relative;
+  left: 2px;
+  transition:
+    background 0.3s ease,
+    border-color 0.3s ease;
+  cursor: pointer;
+}
+
+/* Active Step */
+.step-circle.active {
+  background-color: #7352c7;
+  border-color: #7352c7;
+}
+
+.step-circle.active::after {
+  content: "✔";
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.css-1itwg7x-MuiGrid-root > .MuiGrid-item {
+  padding-left: 8px !important;
+}
+
+element.style {
+  height: 200px !important ;
+  --Paper-shadow:
+    0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+}

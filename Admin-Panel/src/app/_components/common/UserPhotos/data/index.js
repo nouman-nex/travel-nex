@@ -1,0 +1,88 @@
+import { ASSET_IMAGES } from "@app/_utilities/constants/paths";
+
+export const userPhotos = [
+  {
+    id: 1,
+    photo_url: `../../../../../../../images/member.jpg`,
+    caption: "Beauty with Beast",
+    thumb: "",
+    size: 2.5,
+  },
+  {
+    id: 2,
+    photo_url: `../../../../../../../images/member.jpg`,
+    caption: "Nature Love",
+    thumb: "",
+    size: 2,
+  },
+  {
+    id: 3,
+    photo_url: `../../../../../../../images/member.jpg`,
+    caption: "Forest",
+    thumb: "",
+    size: 3.5,
+  },
+  {
+    id: 4,
+    photo_url: `../../../../../../../images/member.jpg`,
+    caption: "Nature at its best",
+    thumb: "",
+    size: 5,
+  },
+  {
+    id: 5,
+    photo_url: `../../../../../../../images/member.jpg`,
+    caption: "Sea House",
+    thumb: "",
+    size: 3.5,
+  },
+  {
+    id: 6,
+    photo_url: `../../../../../../../images/member.jpg`,
+    caption: "Minimal",
+    thumb: "",
+    size: 4,
+  },
+  {
+    id: 7,
+    photo_url: `../../../../../../../images/member.jpg`,
+    caption: "Beauty with Beast",
+    thumb: "",
+    size: 2.5,
+  },
+  {
+    id: 8,
+    photo_url: `../../../../../../../images/member.jpg`,
+    caption: "Nature Love",
+    thumb: "",
+    size: 2,
+  },
+  {
+    id: 9,
+    photo_url: `../../../../../../../images/member.jpg`,
+    caption: "Forest",
+    thumb: "",
+    size: 3.5,
+  },
+  {
+    id: 10,
+    photo_url: `../../../../../../../images/member.jpg`,
+    caption: "Nature at its best",
+    thumb: "",
+    size: 5,
+  },
+  {
+    id: 11,
+    photo_url: `../../../../../../../images/member.jpg`,
+    caption: "Sea House",
+    thumb: "",
+    size: 3.5,
+  },
+  {
+    id: 12,
+    photo_url: `../../../../../../../images/member.jpg`,
+    caption: "Minimal",
+    thumb: "",
+    size: 4,
+  },
+];

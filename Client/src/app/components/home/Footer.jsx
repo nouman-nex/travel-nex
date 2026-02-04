@@ -1,5 +1,6 @@
 import React from "react";
 import logo from "../../assets/header/logo.png";
+import { Clock } from "lucide-react";
 export default function Footer() {
   return (
     <div>
@@ -96,21 +97,28 @@ export default function Footer() {
                   <div className="widget-head">
                     <h4>Branches</h4>
                   </div>
-                  <ul className="list-items">
-                    <li>
-                      <a href="tour-details.html">Wanderlust Adventures</a>
+                  <ul className="space-y-2">
+                    <li className="flex items-center gap-2">
+                      <a href="#" className="text-white cursor-not-allowed">
+                        Rawalpindi
+                      </a>
+                      <span className="flex items-center gap-1 rounded-full bg-yellow-100 px-2 py-0.5 text-xs font-semibold text-yellow-800">
+                        <Clock size={12} />
+                        Coming Soon
+                      </span>
                     </li>
-                    <li>
-                      <a href="tour-details.html">Globe Trotters Travel</a>
-                    </li>
-                    <li>
-                      <a href="tour-details.html">Odyssey Travel Services</a>
-                    </li>
-                    <li>
-                      <a href="tour-details.html">Jet Set Journeys</a>
-                    </li>
-                    <li>
-                      <a href="tour-details.html">Dream Destinations Travel</a>
+
+                    <li className="flex items-center gap-2">
+                      <a
+                        href="#"
+                        className="text-white pointer-events-non cursor-not-allowed"
+                      >
+                        Qatar
+                      </a>
+                      <span className="flex items-center gap-1 rounded-full bg-yellow-100 px-2 py-0.5 text-xs font-semibold text-yellow-800">
+                        <Clock size={12} />
+                        Coming Soon
+                      </span>
                     </li>
                   </ul>
                 </div>
@@ -153,7 +161,7 @@ export default function Footer() {
                       </div>
                       <div className="content">
                         <h6>
-                          <a href="tel:+0537641351">0537 641351</a> <br />
+                          <a href="tel:+43537641351">+43 537 641351</a> <br />
                           <a href="tel:+923453866681">+92 345 3866681</a>
                         </h6>
                       </div>
@@ -166,7 +174,7 @@ export default function Footer() {
           <div className="footer-bottom">
             <div className="footer-wrapper">
               <p className="wow fadeInUp" data-wow-delay=".3s">
-                Copyright © <span>CFD Travels,</span> All Rights Reserved.
+                Copyright © <span>NexaGen Solutions,</span> All Rights Reserved.
               </p>
               <ul className="bottom-list wow fadeInUp" data-wow-delay=".5s">
                 <li>Terms of use</li>

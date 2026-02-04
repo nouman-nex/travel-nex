@@ -36,11 +36,10 @@ export default function TravelFeature() {
                     </h2>
                   </div>
                   <p className="wow fadeInUp wow" data-wow-delay=".3s">
-                    Hum aapko provide karte hain authentic aur fast work permit
-                    services top global destinations ke liye. Hamari team har
-                    step par aapki help karti hai, documentation se lekar final
-                    visa approval tak, taake aapka career international level
-                    par grow kar sake.
+                    We provide authentic and fast work permit services for top
+                    global destinations. Our team supports you at every
+                    step—from documentation to final visa approval—so that your
+                    career can grow at an international level.
                   </p>
                   <div className="feature-area">
                     <div className="line-shape">
@@ -57,6 +56,7 @@ export default function TravelFeature() {
                       <div className="feature-icon-item">
                         <div className="icon">
                           <img
+                            style={{ margin: "10px auto" }}
                             src="https://ex-coders.com/html/turmet/assets/img/icon/08.svg"
                             alt="img"
                           />
@@ -88,6 +88,7 @@ export default function TravelFeature() {
                       <div className="feature-icon-item">
                         <div className="icon">
                           <img
+                            style={{ margin: "10px auto" }}
                             src="https://ex-coders.com/html/turmet/assets/img/icon/09.svg"
                             alt="img"
                           />
@@ -105,8 +106,8 @@ export default function TravelFeature() {
                         </li>
                         <li>
                           <span>
-                            99% success rate ke sath hassle-free <br />
-                            documentation aur filing.
+                            Hassle-free documentation and filing with
+                            <br /> a 99% success rate.
                           </span>
                         </li>
                       </ul>

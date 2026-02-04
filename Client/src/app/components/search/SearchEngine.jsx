@@ -41,7 +41,6 @@ export default function SearchEngine() {
     infant: 0,
   });
   const [activeDropdown, setActiveDropdown] = useState(null);
-  const [contact, setContact] = useState("");
 
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
@@ -452,7 +451,7 @@ export default function SearchEngine() {
                           />
                         </div>
                       </div>
-                      {idx === 0 && (
+                      {/* {idx === 0 && (
                         <div className="field-group">
                           <div className="field-label">Contact Number</div>
                           <div className="field">
@@ -464,7 +463,7 @@ export default function SearchEngine() {
                             />
                           </div>
                         </div>
-                      )}
+                      )} */}
                     </div>
                   </div>
                 </div>
