@@ -1,5 +1,5 @@
 import React from "react";
-
+import logo from "../../assets/header/logo.png";
 export default function Footer() {
   return (
     <div>
@@ -22,7 +22,8 @@ export default function Footer() {
                   <div className="widget-head">
                     <a href="index.html">
                       <img
-                        src="https://ex-coders.com/html/turmet/assets/img/logo/white-log.svg"
+                        style={{ height: "100px", margin: "0 auto" }}
+                        src={logo}
                         alt="img"
                       />
                     </a>
@@ -129,8 +130,8 @@ export default function Footer() {
                       </div>
                       <div className="content">
                         <h6>
-                          9550 Bolsa Ave #126, <br />
-                          United States
+                          Head Office: Kotla Arab Ali <br /> Khan Road,
+                          Langrial, Gujrat, Pakistan.
                         </h6>
                       </div>
                     </div>
@@ -152,6 +153,7 @@ export default function Footer() {
                       </div>
                       <div className="content">
                         <h6>
+                          <a href="tel:+0537641351">0537 641351</a> <br />
                           <a href="tel:+923453866681">+92 345 3866681</a>
                         </h6>
                       </div>

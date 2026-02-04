@@ -13,12 +13,6 @@ import "../../styles/search.css";
 
 const TRIP_TYPES = ["One Way", "Round Trip", "Multi-City"];
 const CABIN_CLASSES = ["Economy", "Premium Economy", "Business", "First Class"];
-// const CURRENCIES = [
-//   { code: "PKR", flag: "🇵🇰" },
-//   { code: "USD", flag: "🇺🇸" },
-//   { code: "SAR", flag: "🇸🇦" },
-//   { code: "EUR", flag: "🇪🇺" },
-// ];
 
 const PassengerRow = ({ label, sub, value, onDec, onInc }) => (
   <div className="pass-row">
@@ -46,7 +40,6 @@ export default function SearchEngine() {
     child: 0,
     infant: 0,
   });
-  // const [currency, setCurrency] = useState(CURRENCIES[0]);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [contact, setContact] = useState("");
 
@@ -387,32 +380,6 @@ export default function SearchEngine() {
               </div>
             )}
           </div>
-
-          {/* <div className="pill currency">
-            {currency.flag} {currency.code}
-            <ChevronDown
-              size={14}
-              onClick={() =>
-                setActiveDropdown(activeDropdown === "curr" ? null : "curr")
-              }
-            />
-            {activeDropdown === "curr" && (
-              <div className="dropdown" style={{ left: "auto", right: 0 }}>
-                {CURRENCIES.map((c) => (
-                  <button
-                    key={c.code}
-                    onClick={() => {
-                      setCurrency(c);
-                      setActiveDropdown(null);
-                    }}
-                    className="dropdown-item"
-                  >
-                    {c.flag} {c.code}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div> */}
         </div>
 
         <div className="form">

@@ -2,6 +2,7 @@ import React from "react";
 
 import darkLogo from "../../assets/header/black-logo.svg";
 import whiteLogo from "../../assets/header/white-log.svg";
+import logo from "../../assets/header/logo.png";
 export default function Navbar() {
   return (
     <div>
@@ -12,7 +13,7 @@ export default function Navbar() {
               <div className="offcanvas__top mb-5 d-flex justify-content-between align-items-center">
                 <div className="offcanvas__logo">
                   <a href="index.html">
-                    <img src={darkLogo} alt="logo-img" />
+                    <img src={logo} alt="logo-img" className="h-10 w-auto" />
                   </a>
                 </div>
                 <div className="offcanvas__close">
@@ -36,7 +37,8 @@ export default function Navbar() {
                     </div>
                     <div className="offcanvas__contact-text">
                       <a target="_blank" href="#">
-                        Main Street, Melbourne, Australia
+                        Head Office: Kotla Arab Ali Khan Road, Langrial, Gujrat,
+                        Pakistan.
                       </a>
                     </div>
                   </li>
@@ -138,11 +140,26 @@ export default function Navbar() {
               <div className="header-main">
                 <div className="logo">
                   <a href="index.html" className="header-logo">
-                    <img src={whiteLogo} alt="logo-img" />
+                    <img
+                      src={logo}
+                      alt="logo-img"
+                      /* h-10: Height on mobile (40px)
+         w-auto: Keeps aspect ratio
+         md:h-16: Height on tablets/small laptops (64px)
+         lg:h-20: Height on large desktops (80px)
+      */
+                      className="h-10 w-auto md:h-16 lg:h-20 mb-2.5"
+                    />
                   </a>
+
+                  {/* If you are using the logo-2 div for a secondary header style: */}
                   <div className="logo-2">
                     <a href="index.html">
-                      <img src={darkLogo} alt="" />
+                      <img
+                        src={logo}
+                        alt="logo-img"
+                        className="h-12 w-auto md:h-24"
+                      />
                     </a>
                   </div>
                 </div>
@@ -152,99 +169,8 @@ export default function Navbar() {
                       <nav id="mobile-menu">
                         <ul>
                           <li className="has-dropdown active menu-thumb">
-                            <a href="index.html">
-                              Home
-                              {/* <i className="fa-solid fa-chevron-down"></i> */}
-                            </a>
-                            {/* <ul className="submenu has-homemenu">
-                              <li>
-                                <div className="homemenu-items">
-                                  <div className="homemenu">
-                                    <div className="homemenu-thumb">
-                                      <img
-                                        src="https://ex-coders.com/html/turmet/assets/img/header/home-1.jpg"
-                                        alt="img"
-                                      />
-                                      <div className="demo-button">
-                                        <a
-                                          href="index.html"
-                                          className="theme-btn"
-                                        >
-                                          Multi Page
-                                        </a>
-                                        <a
-                                          href="index-one-page.html"
-                                          className="theme-btn"
-                                        >
-                                          One Page
-                                        </a>
-                                      </div>
-                                    </div>
-                                    <div className="homemenu-content text-center">
-                                      <h4 className="homemenu-title">
-                                        Tour Booking
-                                      </h4>
-                                    </div>
-                                  </div>
-                                  <div className="homemenu">
-                                    <div className="homemenu-thumb mb-15">
-                                      <img
-                                        src="https://ex-coders.com/html/turmet/assets/img/header/home-2.jpg"
-                                        alt="img"
-                                      />
-                                      <div className="demo-button">
-                                        <a
-                                          href="index-2.html"
-                                          className="theme-btn"
-                                        >
-                                          Multi Page
-                                        </a>
-                                        <a
-                                          href="index-two-page.html"
-                                          className="theme-btn"
-                                        >
-                                          One Page
-                                        </a>
-                                      </div>
-                                    </div>
-                                    <div className="homemenu-content text-center">
-                                      <h4 className="homemenu-title">
-                                        Travel Booking
-                                      </h4>
-                                    </div>
-                                  </div>
-                                  <div className="homemenu">
-                                    <div className="homemenu-thumb mb-15">
-                                      <img
-                                        src="https://ex-coders.com/html/turmet/assets/img/header/home-3.jpg"
-                                        alt="img"
-                                      />
-                                      <div className="demo-button">
-                                        <a
-                                          href="index-3.html"
-                                          className="theme-btn"
-                                        >
-                                          Multi Page
-                                        </a>
-                                        <a
-                                          href="index-three-page.html"
-                                          className="theme-btn"
-                                        >
-                                          One Page
-                                        </a>
-                                      </div>
-                                    </div>
-                                    <div className="homemenu-content text-center">
-                                      <h4 className="homemenu-title">
-                                        Flight Booking
-                                      </h4>
-                                    </div>
-                                  </div>
-                                </div>
-                              </li>
-                            </ul> */}
+                            <a href="index.html">Home</a>
                           </li>
-                          {/* Mobile-only Home dropdown removed */}
                           <li>
                             <a href="about.html">About Us</a>
                           </li>

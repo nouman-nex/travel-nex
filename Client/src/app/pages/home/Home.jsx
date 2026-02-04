@@ -21,11 +21,11 @@ export default function Home() {
       <Feature />
       <CTA />
       <Destination />
-      <About />
+      {/* <About />
       <PopularDestination />
-      <DealsOffer />
-      <Testimonials />
+      <DealsOffer /> */}
       <TravelFeature />
+      <Testimonials />
       <Footer />
     </div>
   );
