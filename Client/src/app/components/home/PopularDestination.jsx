@@ -148,7 +148,7 @@ export default function PopularDestination() {
   };
 
   return (
-    <div>
+    <div className="mt-4">
       <section className="popular-destination-section section-padding pt-0">
         <div className="car-shape float-bob-x">
           <img

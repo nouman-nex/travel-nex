@@ -1,263 +1,111 @@
 import { useState, useRef, useEffect } from "react";
+import {
+  Plane,
+  Calendar,
+  Phone,
+  Search,
+  ChevronDown,
+  Users,
+  Plus,
+  X,
+} from "lucide-react";
+import "../../styles/search.css";
 
-/* ─── icons (inline SVGs to keep it self-contained) ─── */
-const Icon = ({ d, size = 18, className = "" }) => (
-  <svg
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth={2}
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className={className}
-  >
-    <path d={d} />
-  </svg>
-);
-const PlaneIcon = ({ size = 18, className = "" }) => (
-  <svg
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill="currentColor"
-    className={className}
-  >
-    <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" />
-  </svg>
-);
-const CalendarIcon = ({ size = 18, className = "" }) => (
-  <svg
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth={2}
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className={className}
-  >
-    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-    <line x1="16" y1="2" x2="16" y2="6" />
-    <line x1="8" y1="2" x2="8" y2="6" />
-    <line x1="3" y1="10" x2="21" y2="10" />
-  </svg>
-);
-const PhoneIcon = ({ size = 18, className = "" }) => (
-  <svg
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth={2}
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className={className}
-  >
-    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-  </svg>
-);
-const SearchIcon = ({ size = 20, className = "" }) => (
-  <svg
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth={2.5}
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className={className}
-  >
-    <circle cx="11" cy="11" r="8" />
-    <line x1="21" y1="21" x2="16.65" y2="16.65" />
-  </svg>
-);
-const ChevronDownIcon = ({ size = 14, className = "" }) => (
-  <svg
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth={2.5}
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className={className}
-  >
-    <polyline points="6 9 12 15 18 9" />
-  </svg>
-);
-const UsersIcon = ({ size = 14, className = "" }) => (
-  <svg
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth={2}
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className={className}
-  >
-    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-    <circle cx="9" cy="7" r="4" />
-    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-  </svg>
-);
-const PlusIcon = ({ size = 16, className = "" }) => (
-  <svg
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth={2.5}
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className={className}
-  >
-    <line x1="12" y1="5" x2="12" y2="19" />
-    <line x1="5" y1="12" x2="19" y2="12" />
-  </svg>
-);
+const TRIP_TYPES = ["One Way", "Round Trip", "Multi-City"];
+const CABIN_CLASSES = ["Economy", "Premium Economy", "Business", "First Class"];
+// const CURRENCIES = [
+//   { code: "PKR", flag: "🇵🇰" },
+//   { code: "USD", flag: "🇺🇸" },
+//   { code: "SAR", flag: "🇸🇦" },
+//   { code: "EUR", flag: "🇪🇺" },
+// ];
 
-/* ─── swap arrows (the blue circle swap icon in reference) ─── */
-const SwapIcon = () => (
-  <svg width={32} height={32} viewBox="0 0 32 32" fill="none">
-    <circle
-      cx="16"
-      cy="16"
-      r="15"
-      fill="white"
-      stroke="#ddd"
-      strokeWidth={1.5}
-    />
-    <path
-      d="M11 13h7M15 10l3 3-3 3"
-      stroke="#1d6dc8"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M21 19h-7M17 22l-3-3 3-3"
-      stroke="#1d6dc8"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
-
-/* ─── Passenger counter row ─── */
 const PassengerRow = ({ label, sub, value, onDec, onInc }) => (
-  <div
-    style={{
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "space-between",
-      marginBottom: 14,
-    }}
-  >
+  <div className="pass-row">
     <div>
-      <div style={{ fontWeight: 600, fontSize: 14, color: "#1a1a1a" }}>
-        {label}
-      </div>
-      <div style={{ fontSize: 12, color: "#999" }}>{sub}</div>
+      <div className="pass-label">{label}</div>
+      <div className="pass-sub">{sub}</div>
     </div>
-    <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-      <button
-        onClick={onDec}
-        style={{
-          width: 28,
-          height: 28,
-          borderRadius: 14,
-          border: "1.5px solid #1d6dc8",
-          background: "transparent",
-          color: "#1d6dc8",
-          fontSize: 18,
-          lineHeight: 1,
-          cursor: "pointer",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
+    <div className="pass-ctrl">
+      <button onClick={onDec} className="cnt-btn dec">
         −
       </button>
-      <span
-        style={{
-          fontSize: 14,
-          fontWeight: 700,
-          width: 16,
-          textAlign: "center",
-        }}
-      >
-        {value}
-      </span>
-      <button
-        onClick={onInc}
-        style={{
-          width: 28,
-          height: 28,
-          borderRadius: 14,
-          border: "none",
-          background: "#1d6dc8",
-          color: "#fff",
-          fontSize: 18,
-          lineHeight: 1,
-          cursor: "pointer",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
+      <span className="cnt-val">{value}</span>
+      <button onClick={onInc} className="cnt-btn inc">
         +
       </button>
     </div>
   </div>
 );
 
-/* ─── Main component ─── */
 export default function SearchEngine() {
-  const [tripType, setTripType] = useState("Multi-City");
+  const [tripType, setTripType] = useState("One Way");
   const [cabinClass, setCabinClass] = useState("Economy");
   const [passengers, setPassengers] = useState({
-    adult: 2,
-    child: 1,
-    infant: 1,
+    adult: 1,
+    child: 0,
+    infant: 0,
   });
-  const [stops, setStops] = useState("Stop's");
-  const [currency, setCurrency] = useState({ code: "PKR", flag: "🇵🇰" });
-  const [activeTab, setActiveTab] = useState("Flights");
+  // const [currency, setCurrency] = useState(CURRENCIES[0]);
   const [activeDropdown, setActiveDropdown] = useState(null);
+  const [contact, setContact] = useState("");
+
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
+  const [departDate, setDepartDate] = useState("");
+  const [returnDate, setReturnDate] = useState("");
   const [flights, setFlights] = useState([
-    { id: 1, from: "", to: "", date: "2026-02-12" },
-    {
-      id: 2,
-      from: "JED - King Abdulaziz Intl Airport, Saudi Arabia",
-      to: "",
-      date: "2026-02-19",
-    },
+    { id: 1, from: "", to: "", date: "" },
+    { id: 2, from: "", to: "", date: "" },
   ]);
 
   const containerRef = useRef(null);
+
   useEffect(() => {
     const handler = (e) => {
-      if (containerRef.current && !containerRef.current.contains(e.target))
+      if (containerRef.current && !containerRef.current.contains(e.target)) {
         setActiveDropdown(null);
+      }
     };
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
-  const totalTravellers =
-    passengers.adult + passengers.child + passengers.infant;
+  useEffect(() => {
+    setFrom("");
+    setTo("");
+    setDepartDate("");
+    setReturnDate("");
+    setFlights([
+      { id: 1, from: "", to: "", date: "" },
+      { id: 2, from: "", to: "", date: "" },
+    ]);
+  }, [tripType]);
+
+  const totalPass = passengers.adult + passengers.child + passengers.infant;
+
+  const swapRoute = () => {
+    const temp = from;
+    setFrom(to);
+    setTo(temp);
+  };
+
+  const swapMultiRoute = (id) => {
+    setFlights((prev) =>
+      prev.map((f) => {
+        if (f.id === id) {
+          return { ...f, from: f.to, to: f.from };
+        }
+        return f;
+      }),
+    );
+  };
+
+  const updateFlight = (id, field, val) => {
+    setFlights((prev) =>
+      prev.map((f) => (f.id === id ? { ...f, [field]: val } : f)),
+    );
+  };
 
   const addFlight = () => {
     setFlights((prev) => [
@@ -265,633 +113,482 @@ export default function SearchEngine() {
       { id: Date.now(), from: "", to: "", date: "" },
     ]);
   };
+
   const removeFlight = (id) => {
-    setFlights((prev) => prev.filter((f) => f.id !== id));
-  };
-  const updateFlight = (id, field, val) => {
-    setFlights((prev) =>
-      prev.map((f) => (f.id === id ? { ...f, [field]: val } : f)),
-    );
-  };
-  const swapFlight = (id) => {
-    setFlights((prev) =>
-      prev.map((f) => (f.id === id ? { ...f, from: f.to, to: f.from } : f)),
-    );
+    if (flights.length > 2)
+      setFlights((prev) => prev.filter((f) => f.id !== id));
   };
 
-  const formatDate = (val) => {
-    if (!val) return "";
-    const d = new Date(val + "T00:00:00");
-    return d.toLocaleDateString("en-GB", {
-      day: "numeric",
-      month: "short",
-      year: "numeric",
+  const updatePassenger = (type, delta) => {
+    setPassengers((p) => {
+      const newVal = Math.max(type === "adult" ? 1 : 0, p[type] + delta);
+      return { ...p, [type]: newVal };
     });
   };
 
-  /* ─── tab definitions ─── */
-  const tabs = [
-    {
-      label: "Flights",
-      color: "#1d6dc8",
-      icon: <PlaneIcon size={15} className="text-white" />,
-    },
-    {
-      label: "Umrah",
-      color: "#c8232e",
-      icon: <span style={{ fontSize: 15 }}>🕌</span>,
-    },
-    {
-      label: "Visa",
-      color: "#1a8a3c",
-      icon: <span style={{ fontSize: 15 }}>📄</span>,
-    },
-    {
-      label: "Hotel",
-      color: "#e67e22",
-      icon: <span style={{ fontSize: 15 }}>🏨</span>,
-    },
-    {
-      label: "eSIM",
-      color: "#6c3483",
-      icon: <span style={{ fontSize: 15 }}>📱</span>,
-    },
-  ];
-
-  /* ─── styles ─── */
-  const s = {
-    wrap: {
-      width: "100%",
-      maxWidth: 1280,
-      margin: "0 auto",
-      background: "#fff",
-      borderRadius: 12,
-      boxShadow: "0 4px 24px rgba(0,0,0,0.08)",
-      overflow: "hidden",
-      fontFamily: "'Segoe UI', sans-serif",
-    },
-    tabBar: {
-      display: "flex",
-      gap: 3,
-      padding: "8px 12px",
-      background: "linear-gradient(135deg,#e8f4fd 0%,#cce5f5 100%)",
-    },
-    tab: (active, color) => ({
-      display: "flex",
-      alignItems: "center",
-      gap: 6,
-      padding: "8px 22px",
-      borderRadius: 6,
-      border: "none",
-      cursor: "pointer",
-      fontSize: 14,
-      fontWeight: 600,
-      background: active ? color : "transparent",
-      color: active ? "#fff" : "#555",
-      transition: "all .2s",
-    }),
-    filterRow: {
-      display: "flex",
-      flexWrap: "wrap",
-      alignItems: "center",
-      gap: 10,
-      padding: "14px 20px",
-      borderBottom: "1px solid #eee",
-    },
-    tripGroup: {
-      display: "flex",
-      gap: 2,
-    },
-    tripBtn: (active) => ({
-      padding: "5px 14px",
-      border: active ? "1.5px solid #1d6dc8" : "1.5px solid #ccc",
-      borderRadius: 20,
-      background: active ? "#fff" : "#fff",
-      color: active ? "#1d6dc8" : "#666",
-      fontWeight: active ? 600 : 400,
-      fontSize: 13,
-      cursor: "pointer",
-      transition: "all .15s",
-    }),
-    pill: {
-      display: "flex",
-      alignItems: "center",
-      gap: 5,
-      padding: "5px 12px",
-      border: "1.5px solid #ccc",
-      borderRadius: 20,
-      background: "#fff",
-      fontSize: 13,
-      color: "#444",
-      cursor: "pointer",
-    },
-    flightsArea: {
-      padding: "16px 20px 20px",
-    },
-    flightRow: {
-      display: "flex",
-      alignItems: "center",
-      gap: 10,
-      marginBottom: 14,
-    },
-    label: {
-      fontSize: 12,
-      fontWeight: 700,
-      color: "#999",
-      minWidth: 58,
-      textTransform: "uppercase",
-      letterSpacing: "0.5px",
-    },
-    inputBox: {
-      flex: 1,
-      display: "flex",
-      alignItems: "center",
-      border: "1.5px solid #ddd",
-      borderRadius: 8,
-      padding: "10px 12px",
-      gap: 8,
-      background: "#fafafa",
-      transition: "border-color .2s, background .2s",
-      minHeight: 44,
-    },
-    input: {
-      border: "none",
-      outline: "none",
-      background: "transparent",
-      fontSize: 14,
-      color: "#333",
-      flex: 1,
-      minWidth: 0,
-    },
-    dateBox: {
-      display: "flex",
-      alignItems: "center",
-      border: "1.5px solid #ddd",
-      borderRadius: 8,
-      padding: "10px 12px",
-      gap: 8,
-      background: "#fafafa",
-      minWidth: 150,
-      minHeight: 44,
-      position: "relative",
-      cursor: "pointer",
-    },
-    dateInput: {
-      border: "none",
-      outline: "none",
-      background: "transparent",
-      fontSize: 14,
-      color: "#333",
-      flex: 1,
-      cursor: "pointer",
-      minWidth: 0,
-    },
-    contactBox: {
-      display: "flex",
-      alignItems: "center",
-      border: "1.5px solid #ddd",
-      borderRadius: 8,
-      padding: "10px 12px",
-      gap: 8,
-      background: "#fafafa",
-      minWidth: 170,
-      minHeight: 44,
-    },
-    searchBtn: {
-      background: "#1d6dc8",
-      color: "#fff",
-      border: "none",
-      borderRadius: 8,
-      padding: "10px 22px",
-      display: "flex",
-      alignItems: "center",
-      gap: 8,
-      fontSize: 14,
-      fontWeight: 600,
-      cursor: "pointer",
-      minHeight: 44,
-      whiteSpace: "nowrap",
-      boxShadow: "0 2px 8px rgba(29,109,200,0.3)",
-      transition: "background .15s",
-    },
-    addBtn: {
-      display: "flex",
-      alignItems: "center",
-      gap: 5,
-      border: "none",
-      background: "transparent",
-      color: "#1d6dc8",
-      fontSize: 13,
-      fontWeight: 600,
-      cursor: "pointer",
-    },
-    xBtn: {
-      border: "none",
-      background: "transparent",
-      color: "#d93025",
-      fontSize: 16,
-      fontWeight: 700,
-      cursor: "pointer",
-      lineHeight: 1,
-      padding: "0 2px",
-    },
-    dropdown: {
-      position: "absolute",
-      top: "calc(100% + 6px)",
-      left: 0,
-      zIndex: 100,
-      background: "#fff",
-      border: "1px solid #ddd",
-      borderRadius: 10,
-      boxShadow: "0 6px 20px rgba(0,0,0,0.12)",
-      minWidth: 160,
-      padding: "6px 0",
-    },
-    dropdownItem: {
-      display: "block",
-      width: "100%",
-      padding: "8px 16px",
-      border: "none",
-      background: "transparent",
-      textAlign: "left",
-      fontSize: 13,
-      color: "#333",
-      cursor: "pointer",
-    },
-  };
-
   return (
-    <div style={s.wrap} ref={containerRef}>
-      {/* ── Tab Bar ── */}
-      <div style={s.tabBar}>
-        {tabs.map((t) => (
-          <button
-            key={t.label}
-            onClick={() => setActiveTab(t.label)}
-            style={s.tab(activeTab === t.label, t.color)}
-          >
-            {t.icon}
-            {t.label}
+    <>
+      <div className="container mt-4" ref={containerRef}>
+        <div className="header">
+          <button className="tab active">
+            <Plane size={16} />
+            Flights
           </button>
-        ))}
-      </div>
-
-      {/* ── Filter Pills ── */}
-      <div style={s.filterRow}>
-        {/* Trip type pills */}
-        <div style={s.tripGroup}>
-          {["Round Trip", "One Way", "Multi-City"].map((t) => (
-            <button
-              key={t}
-              onClick={() => setTripType(t)}
-              style={s.tripBtn(tripType === t)}
+          <button className="tab">
+            <svg
+              viewBox="-3.6 -3.6 43.20 43.20"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              aria-hidden="true"
+              role="img"
+              class="iconify iconify--twemoji w-3.75 sm:w-6.25 sm:h-6.25 h-3.75 mr-1"
+              preserveAspectRatio="xMidYMid meet"
+              fill="#000000"
             >
-              {t}
-            </button>
-          ))}
+              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+              <g
+                id="SVGRepo_tracerCarrier"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></g>
+              <g id="SVGRepo_iconCarrier">
+                <path d="M18 0L0 5v29l18 2l18-2V5z" fill="#000000"></path>
+                <path fill="#292F33" d="M18 36l18-2V5L18 0z"></path>
+                <path
+                  fill="#FFD983"
+                  d="M22.454 14.507v3.407l4.229.612V15.22zm7 1.181v3.239l3.299.478v-3.161zM18 13.756v3.513l1.683.244V14.04zm18 3.036l-.539-.091v3.096l.539.078z"
+                ></path>
+                <path
+                  fill="#FFAC33"
+                  d="M0 16.792v3.083l.539-.078v-3.096zm16.317-2.752v3.473L18 17.269v-3.513zm-13.07 2.204v3.161l3.299-.478v-3.239zm6.07-1.024v3.306l4.229-.612v-3.407z"
+                ></path>
+                <path
+                  fill="#FFD983"
+                  d="M21.389 15.131v-.042c0-.421-.143-.763-.32-.763c-.177 0-.32.342-.32.763v.042c-.208.217-.355.621-.355 1.103c0 .513.162.949.393 1.152c.064.195.163.33.282.33s.218-.135.282-.33c.231-.203.393-.639.393-1.152c-.001-.482-.147-.886-.355-1.103zm6.999 1.069v-.042c0-.421-.143-.763-.32-.763c-.177 0-.32.342-.32.763v.042c-.208.217-.355.621-.355 1.103c0 .513.162.949.393 1.152c.064.195.163.33.282.33s.218-.135.282-.33c.231-.203.393-.639.393-1.152c0-.481-.147-.885-.355-1.103zm6.017 1.03v-.039c0-.393-.134-.712-.299-.712c-.165 0-.299.319-.299.712v.039c-.194.203-.331.58-.331 1.03c0 .479.151.886.367 1.076c.059.182.152.308.263.308s.203-.126.263-.308c.215-.189.367-.597.367-1.076c0-.45-.136-.827-.331-1.03z"
+                ></path>
+                <path
+                  fill="#FFAC33"
+                  d="M14.611 15.131v-.042c0-.421.143-.763.32-.763s.32.342.32.763v.042c.208.217.355.621.355 1.103c0 .513-.162.949-.393 1.152c-.064.195-.163.33-.282.33s-.218-.135-.282-.33c-.231-.203-.393-.639-.393-1.152c.001-.482.147-.886.355-1.103zM7.612 16.2v-.042c0-.421.143-.763.32-.763s.32.342.32.763v.042c.208.217.355.621.355 1.103c0 .513-.162.949-.393 1.152c-.064.195-.163.33-.282.33s-.218-.135-.282-.33c-.231-.203-.393-.639-.393-1.152c0-.481.147-.885.355-1.103zm-6.017 1.03v-.039c0-.393.134-.712.299-.712s.299.319.299.712v.039c.194.203.331.58.331 1.03c0 .479-.151.886-.367 1.076c-.059.182-.152.308-.263.308s-.204-.127-.264-.308c-.215-.189-.367-.597-.367-1.076c.001-.45.137-.827.332-1.03zM0 11.146v3.5l18-3.268V7.614z"
+                ></path>
+                <path fill="#FFD983" d="M18 7.614v3.764l18 3.268v-3.5z"></path>
+              </g>
+            </svg>{" "}
+            Umrah
+          </button>
+          <button className="tab">
+            <svg
+              class="mr-1 w-3.75 sm:w-6.25 sm:h-6.25 h-3.75"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              viewBox="-51.2 -51.2 614.40 614.40"
+              xml:space="preserve"
+              fill="white"
+              stroke="#000000"
+            >
+              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+              <g
+                id="SVGRepo_tracerCarrier"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke="#CCCCCC"
+                stroke-width="1.024"
+              ></g>
+              <g id="SVGRepo_iconCarrier">
+                <g>
+                  <path
+                    class="st0"
+                    d="M270.465,279.817c4.674-3.824,9.136-9.612,12.926-16.946c1.258-2.431,2.414-5.116,3.519-7.887h-26.634v29.032 c1.334-0.069,2.651-0.171,3.968-0.29C266.327,282.775,268.408,281.5,270.465,279.817z"
+                  ></path>
+                  <path
+                    class="st0"
+                    d="M216.295,200.236h35.457v-37.674h-29.626C218.743,173.636,216.643,186.485,216.295,200.236z"
+                  ></path>
+                  <path
+                    class="st0"
+                    d="M215.947,254.984h-21.51c1.64,2.015,3.417,3.969,5.27,5.822c8.286,8.303,18.382,14.745,29.643,18.748 c-3.059-3.714-5.83-7.98-8.295-12.774C219.159,263.134,217.493,259.182,215.947,254.984z"
+                  ></path>
+                  <path
+                    class="st0"
+                    d="M241.535,279.817c2.058,1.683,4.139,2.958,6.222,3.909c1.334,0.119,2.652,0.221,3.994,0.29v-29.032h-26.703 C229.476,266.058,235.281,274.701,241.535,279.817z"
+                  ></path>
+                  <path
+                    class="st0"
+                    d="M222.083,246.452h29.669v-37.682h-35.474C216.626,222.519,218.709,235.37,222.083,246.452z"
+                  ></path>
+                  <path
+                    class="st0"
+                    d="M295.706,208.769h-35.43v37.682h29.626C293.259,235.37,295.341,222.537,295.706,208.769z"
+                  ></path>
+                  <path
+                    class="st0"
+                    d="M282.644,279.554c11.269-4.003,21.365-10.445,29.676-18.748c1.853-1.853,3.604-3.807,5.27-5.822h-21.536 C292.536,264.656,288.049,273.019,282.644,279.554z"
+                  ></path>
+                  <path
+                    class="st0"
+                    d="M289.919,162.562h-29.643v37.674h35.472C295.375,186.485,293.31,173.636,289.919,162.562z"
+                  ></path>
+                  <path
+                    class="st0"
+                    d="M304.23,200.236h31.292c-0.722-13.794-4.98-26.634-11.838-37.674h-24.85 C302.029,173.908,303.899,186.69,304.23,200.236z"
+                  ></path>
+                  <path
+                    class="st0"
+                    d="M296.055,154.021h21.536c-1.666-2.023-3.417-3.96-5.27-5.813c-8.303-8.294-18.399-14.737-29.651-18.748 c3.051,3.706,5.83,7.989,8.278,12.765C292.842,145.862,294.533,149.84,296.055,154.021z"
+                  ></path>
+                  <path
+                    class="st0"
+                    d="M270.465,129.188c-2.057-1.666-4.139-2.941-6.221-3.892c-1.318-0.119-2.634-0.221-3.968-0.298v29.023h26.677 C282.55,142.938,276.729,134.295,270.465,129.188z"
+                  ></path>
+                  <path
+                    class="st0"
+                    d="M298.817,246.452h24.867c6.858-11.048,11.116-23.881,11.838-37.682h-31.249 C303.916,222.333,302.004,235.098,298.817,246.452z"
+                  ></path>
+                  <polygon
+                    class="st0"
+                    points="225.329,373.625 217.307,398.467 233.692,398.467 225.651,373.625 "
+                  ></polygon>
+                  <path
+                    class="st0"
+                    d="M394.486,0h-276.97C83.453,0,55.84,27.612,55.84,61.674v388.66c0,34.054,27.613,61.666,61.676,61.666h276.97 c34.062,0,61.674-27.612,61.674-61.666V61.674C456.16,27.612,428.548,0,394.486,0z M256.009,104.712 c55.113,0,99.791,44.668,99.791,99.791c0,55.131-44.678,99.791-99.791,99.8c-55.13-0.009-99.791-44.669-99.808-99.8 C156.218,149.38,200.879,104.712,256.009,104.712z M164.037,399.615h-12.629c-0.424,0-0.629,0.204-0.629,0.62v23.694 c0,0.629-0.407,1.045-1.036,1.045h-13.259c-0.628,0-1.053-0.416-1.053-1.045v-68.881c0-0.629,0.424-1.046,1.053-1.046h27.553 c15.451,0,24.731,9.289,24.731,22.853C188.768,390.215,179.385,399.615,164.037,399.615z M256.859,424.974h-13.564 c-0.731,0-1.156-0.314-1.36-1.045l-4.079-12.417h-24.833l-3.978,12.417c-0.204,0.731-0.612,1.045-1.343,1.045H194.02 c-0.731,0-0.935-0.416-0.731-1.045l24.424-68.881c0.205-0.629,0.629-1.046,1.36-1.046h13.156c0.731,0,1.139,0.417,1.36,1.046 l24,68.881C257.794,424.558,257.59,424.974,256.859,424.974z M289.765,426.122c-11.066,0-21.807-4.386-27.348-9.706 c-0.408-0.416-0.629-1.147-0.103-1.776l7.938-9.077c0.408-0.526,1.038-0.526,1.564-0.11c4.692,3.765,11.065,7.308,18.578,7.308 c7.411,0,11.592-3.442,11.592-8.456c0-4.173-2.515-6.782-10.963-7.929l-3.757-0.519c-14.414-1.988-22.454-8.77-22.454-21.298 c0-13.045,9.824-21.705,25.156-21.705c9.399,0,18.17,2.812,24.119,7.411c0.628,0.416,0.73,0.833,0.204,1.564l-6.357,9.493 c-0.424,0.526-0.952,0.628-1.461,0.314c-5.439-3.544-10.658-5.422-16.504-5.422c-6.255,0-9.485,3.23-9.485,7.717 c0,4.071,2.924,6.68,11.049,7.836l3.772,0.518c14.601,1.981,22.336,8.661,22.336,21.502 C317.642,416.628,308.14,426.122,289.765,426.122z M351.908,426.122c-11.065,0-21.825-4.386-27.348-9.706 c-0.426-0.416-0.629-1.147-0.102-1.776l7.92-9.077c0.424-0.526,1.054-0.526,1.564-0.11c4.708,3.765,11.065,7.308,18.578,7.308 c7.41,0,11.592-3.442,11.592-8.456c0-4.173-2.499-6.782-10.964-7.929l-3.756-0.519c-14.397-1.988-22.436-8.77-22.436-21.298 c0-13.045,9.807-21.705,25.156-21.705c9.4,0,18.152,2.812,24.102,7.411c0.629,0.416,0.731,0.833,0.221,1.564l-6.374,9.493 c-0.408,0.526-0.934,0.628-1.462,0.314c-5.422-3.544-10.64-5.422-16.487-5.422c-6.272,0-9.502,3.23-9.502,7.717 c0,4.071,2.923,6.68,11.065,7.836l3.756,0.518c14.618,1.981,22.334,8.661,22.334,21.502 C379.766,416.628,370.264,426.122,351.908,426.122z"
+                  ></path>
+                  <path
+                    class="st0"
+                    d="M225.1,154.021h26.652v-29.023c-1.343,0.077-2.66,0.178-3.994,0.298c-2.082,0.951-4.164,2.226-6.222,3.892 c-4.674,3.825-9.118,9.62-12.909,16.946C227.36,148.582,226.195,151.259,225.1,154.021z"
+                  ></path>
+                  <path
+                    class="st0"
+                    d="M163.102,367.252h-11.694c-0.424,0-0.629,0.212-0.629,0.629v17.847c0,0.416,0.205,0.628,0.629,0.628h11.694 c6.459,0,10.334-3.756,10.334-9.502C173.436,371.118,169.561,367.252,163.102,367.252z"
+                  ></path>
+                  <path
+                    class="st0"
+                    d="M213.184,162.562h-24.867c-6.858,11.04-11.099,23.881-11.838,37.674h31.249 C208.085,186.681,209.997,173.908,213.184,162.562z"
+                  ></path>
+                  <path
+                    class="st0"
+                    d="M229.357,129.46c-11.252,3.994-21.357,10.454-29.651,18.748c-1.853,1.853-3.629,3.79-5.27,5.813h21.51 C219.465,144.366,223.978,135.987,229.357,129.46z"
+                  ></path>
+                  <path
+                    class="st0"
+                    d="M213.184,246.452c-3.212-11.354-5.065-24.118-5.413-37.682h-31.292c0.739,13.802,4.98,26.634,11.838,37.682 H213.184z"
+                  ></path>
+                </g>
+              </g>
+            </svg>{" "}
+            Visa
+          </button>
+          <button className="tab">
+            <svg
+              fill="#ffffff"
+              class="mr-1 w-3.75 sm:w-6.25 sm:h-6.25 h-3.75"
+              version="1.1"
+              id="Capa_1"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              viewBox="0 0 380 380"
+              xml:space="preserve"
+            >
+              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+              <g
+                id="SVGRepo_tracerCarrier"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></g>
+              <g id="SVGRepo_iconCarrier">
+                <g>
+                  <path d="M303.838,353.36V106.867h7.697V64.12H68.465v42.747h7.697V353.36H61.759V380h256.482v-26.64H303.838z M145.162,336.865 h-40.424v-40.424h40.424V336.865z M145.162,278.32h-40.424v-40.424h40.424V278.32z M145.162,219.775h-40.424v-40.424h40.424 V219.775z M145.162,161.23h-40.424v-40.424h40.424V161.23z M210.213,353.36h-40.426v-56.919h40.426V353.36z M210.213,278.32 h-40.426v-40.424h40.426V278.32z M210.213,219.775h-40.426v-40.424h40.426V219.775z M210.213,161.23h-40.426v-40.424h40.426V161.23 z M275.262,336.865h-40.424v-40.424h40.424V336.865z M275.262,278.32h-40.424v-40.424h40.424V278.32z M275.262,219.775h-40.424 v-40.424h40.424V219.775z M275.262,161.23h-40.424v-40.424h40.424V161.23z"></path>
+                  <polygon points="111.373,55.757 129.489,46.232 147.606,55.757 144.146,35.584 158.803,21.297 138.548,18.354 129.489,0 120.43,18.354 100.176,21.297 114.832,35.584 "></polygon>
+                  <polygon points="171.883,55.757 190,46.232 208.117,55.757 204.656,35.584 219.313,21.297 199.059,18.354 190,0 180.941,18.354 160.687,21.297 175.344,35.584 "></polygon>
+                  <polygon points="232.394,55.757 250.511,46.232 268.627,55.757 265.168,35.584 279.824,21.297 259.57,18.354 250.511,0 241.452,18.354 221.197,21.297 235.854,35.584 "></polygon>
+                </g>
+              </g>
+            </svg>{" "}
+            Hotel
+          </button>
         </div>
 
-        {/* Economy pill */}
-        <div style={{ position: "relative" }}>
-          <button
-            onClick={() =>
-              setActiveDropdown(activeDropdown === "class" ? null : "class")
-            }
-            style={s.pill}
-          >
-            <PlaneIcon size={14} className="" style={{ color: "#1d6dc8" }} />
+        <div className="controls">
+          <div className="trip-group">
+            {TRIP_TYPES.map((t) => (
+              <button
+                key={t}
+                onClick={() => setTripType(t)}
+                className={`trip-btn ${tripType === t ? "active" : ""}`}
+              >
+                {t}
+              </button>
+            ))}
+          </div>
+
+          <div className="pill">
+            <Plane size={15} style={{ color: "#1d6dc8" }} />
             {cabinClass}
-            <ChevronDownIcon size={13} />
-          </button>
-          {activeDropdown === "class" && (
-            <div style={s.dropdown}>
-              {[
-                "Economy",
-                "Premium Economy",
-                "Business Class",
-                "First Class",
-              ].map((c) => (
-                <button
-                  key={c}
-                  onClick={() => {
-                    setCabinClass(c);
-                    setActiveDropdown(null);
-                  }}
-                  style={s.dropdownItem}
-                  onMouseEnter={(e) => (e.target.style.background = "#eef5fc")}
-                  onMouseLeave={(e) =>
-                    (e.target.style.background = "transparent")
-                  }
-                >
-                  {c}
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* Travellers pill */}
-        <div style={{ position: "relative" }}>
-          <button
-            onClick={() =>
-              setActiveDropdown(activeDropdown === "trav" ? null : "trav")
-            }
-            style={s.pill}
-          >
-            <UsersIcon size={14} style={{ color: "#1d6dc8" }} />
-            {totalTravellers} Traveller
-            <ChevronDownIcon size={13} />
-          </button>
-          {activeDropdown === "trav" && (
-            <div style={{ ...s.dropdown, minWidth: 240, padding: 18 }}>
-              <PassengerRow
-                label="Adult"
-                sub="Over 12 years"
-                value={passengers.adult}
-                onDec={() =>
-                  setPassengers((p) => ({
-                    ...p,
-                    adult: Math.max(1, p.adult - 1),
-                  }))
-                }
-                onInc={() =>
-                  setPassengers((p) => ({ ...p, adult: p.adult + 1 }))
-                }
-              />
-              <PassengerRow
-                label="Child"
-                sub="2–11 years"
-                value={passengers.child}
-                onDec={() =>
-                  setPassengers((p) => ({
-                    ...p,
-                    child: Math.max(0, p.child - 1),
-                  }))
-                }
-                onInc={() =>
-                  setPassengers((p) => ({ ...p, child: p.child + 1 }))
-                }
-              />
-              <PassengerRow
-                label="Infant"
-                sub="Under 2 years"
-                value={passengers.infant}
-                onDec={() =>
-                  setPassengers((p) => ({
-                    ...p,
-                    infant: Math.max(0, p.infant - 1),
-                  }))
-                }
-                onInc={() =>
-                  setPassengers((p) => ({ ...p, infant: p.infant + 1 }))
-                }
-              />
-              <button
-                onClick={() => setActiveDropdown(null)}
-                style={{
-                  width: "100%",
-                  marginTop: 10,
-                  padding: "8px 0",
-                  border: "none",
-                  borderRadius: 8,
-                  background: "#1d6dc8",
-                  color: "#fff",
-                  fontWeight: 600,
-                  fontSize: 14,
-                  cursor: "pointer",
-                }}
-              >
-                Done
-              </button>
-            </div>
-          )}
-        </div>
-
-        {/* Stops pill */}
-        <div style={{ position: "relative" }}>
-          <button
-            onClick={() =>
-              setActiveDropdown(activeDropdown === "stops" ? null : "stops")
-            }
-            style={s.pill}
-          >
-            <span
-              style={{
-                display: "inline-block",
-                width: 12,
-                height: 12,
-                background: "#1d6dc8",
-                borderRadius: 3,
-              }}
-            ></span>
-            {stops}
-            <ChevronDownIcon size={13} />
-          </button>
-          {activeDropdown === "stops" && (
-            <div style={s.dropdown}>
-              {["Direct", "1 Stop", "2+ Stops", "All"].map((st) => (
-                <button
-                  key={st}
-                  onClick={() => {
-                    setStops(st);
-                    setActiveDropdown(null);
-                  }}
-                  style={s.dropdownItem}
-                  onMouseEnter={(e) => (e.target.style.background = "#eef5fc")}
-                  onMouseLeave={(e) =>
-                    (e.target.style.background = "transparent")
-                  }
-                >
-                  {st}
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* Currency pill — pushed right */}
-        <div style={{ position: "relative", marginLeft: "auto" }}>
-          <button
-            onClick={() =>
-              setActiveDropdown(activeDropdown === "curr" ? null : "curr")
-            }
-            style={{ ...s.pill, fontWeight: 700 }}
-          >
-            {currency.flag} {currency.code}
-            <ChevronDownIcon size={13} />
-          </button>
-          {activeDropdown === "curr" && (
-            <div style={{ ...s.dropdown, left: "auto", right: 0 }}>
-              {[
-                { code: "PKR", flag: "🇵🇰" },
-                { code: "USD", flag: "🇺🇸" },
-                { code: "SAR", flag: "🇸🇦" },
-              ].map((c) => (
-                <button
-                  key={c.code}
-                  onClick={() => {
-                    setCurrency(c);
-                    setActiveDropdown(null);
-                  }}
-                  style={{
-                    ...s.dropdownItem,
-                    display: "flex",
-                    gap: 8,
-                    alignItems: "center",
-                  }}
-                  onMouseEnter={(e) =>
-                    (e.currentTarget.style.background = "#eef5fc")
-                  }
-                  onMouseLeave={(e) =>
-                    (e.currentTarget.style.background = "transparent")
-                  }
-                >
-                  {c.flag} {c.code}
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* ── Flight Rows ── */}
-      <div style={s.flightsArea}>
-        {flights.map((flight, idx) => (
-          <div key={flight.id} style={s.flightRow}>
-            {/* Label */}
-            <div style={s.label}>Flight {idx + 1}</div>
-
-            {/* From */}
-            <div style={s.inputBox}>
-              <PlaneIcon
-                size={17}
-                style={{ color: "#1d6dc8", flexShrink: 0 }}
-              />
-              <input
-                type="text"
-                placeholder="From Where"
-                value={flight.from}
-                onChange={(e) =>
-                  updateFlight(flight.id, "from", e.target.value)
-                }
-                style={s.input}
-              />
-              {flight.from && idx > 0 && (
-                <button
-                  onClick={() => updateFlight(flight.id, "from", "")}
-                  style={s.xBtn}
-                >
-                  ✕
-                </button>
-              )}
-            </div>
-
-            {/* Swap circle — overlapping visually */}
-            <div
-              style={{
-                flexShrink: 0,
-                margin: "0 -6px",
-                zIndex: 2,
-                cursor: "pointer",
-              }}
-              onClick={() => swapFlight(flight.id)}
-            >
-              <SwapIcon />
-            </div>
-
-            {/* To */}
-            <div style={{ ...s.inputBox, flex: 1.2 }}>
-              <PlaneIcon
-                size={17}
-                style={{ color: "#1d6dc8", flexShrink: 0 }}
-              />
-              <input
-                type="text"
-                placeholder="To Where"
-                value={flight.to}
-                onChange={(e) => updateFlight(flight.id, "to", e.target.value)}
-                style={s.input}
-              />
-            </div>
-
-            {/* Date */}
-            <div style={s.dateBox}>
-              <CalendarIcon
-                size={17}
-                style={{ color: "#d93025", flexShrink: 0 }}
-              />
-              <input
-                type="date"
-                value={flight.date}
-                onChange={(e) =>
-                  updateFlight(flight.id, "date", e.target.value)
-                }
-                style={{
-                  ...s.dateInput,
-                  /* hide native chrome chrome date picker chrome visuals */
-                }}
-              />
-            </div>
-
-            {/* Contact (row 0) / Add flight button (last row) */}
-            {idx === 0 ? (
-              <div style={s.contactBox}>
-                <PhoneIcon
-                  size={17}
-                  style={{ color: "#1d6dc8", flexShrink: 0 }}
-                />
-                <input type="text" placeholder="Contact No." style={s.input} />
+            <ChevronDown
+              size={14}
+              onClick={() =>
+                setActiveDropdown(activeDropdown === "class" ? null : "class")
+              }
+            />
+            {activeDropdown === "class" && (
+              <div className="dropdown">
+                {CABIN_CLASSES.map((c) => (
+                  <button
+                    key={c}
+                    onClick={() => {
+                      setCabinClass(c);
+                      setActiveDropdown(null);
+                    }}
+                    className="dropdown-item"
+                  >
+                    {c}
+                  </button>
+                ))}
               </div>
-            ) : idx === flights.length - 1 ? (
-              <button onClick={addFlight} style={s.addBtn}>
-                <span
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    width: 18,
-                    height: 18,
-                    borderRadius: 9,
-                    background: "#1d6dc8",
-                    color: "#fff",
-                  }}
-                >
-                  <PlusIcon size={12} />
-                </span>
-                Add
-              </button>
-            ) : (
-              <div style={{ minWidth: 90 }} />
-            )}
-
-            {/* Search button (only first row) */}
-            {idx === 0 && (
-              <button
-                style={s.searchBtn}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.background = "#1558a0")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.background = "#1d6dc8")
-                }
-              >
-                <SearchIcon size={18} />
-                Search
-              </button>
-            )}
-
-            {/* Remove button for rows after first */}
-            {idx > 0 && flights.length > 2 && (
-              <button
-                onClick={() => removeFlight(flight.id)}
-                style={{ ...s.xBtn, fontSize: 18, marginLeft: 2 }}
-              >
-                ×
-              </button>
             )}
           </div>
-        ))}
+
+          <div className="pill">
+            <Users size={15} style={{ color: "#1d6dc8" }} />
+            {totalPass} Traveller{totalPass > 1 ? "s" : ""}
+            <ChevronDown
+              size={14}
+              onClick={() =>
+                setActiveDropdown(activeDropdown === "pass" ? null : "pass")
+              }
+            />
+            {activeDropdown === "pass" && (
+              <div className="dropdown pass-dropdown">
+                <PassengerRow
+                  label="Adult"
+                  sub="12+ years"
+                  value={passengers.adult}
+                  onDec={() => updatePassenger("adult", -1)}
+                  onInc={() => updatePassenger("adult", 1)}
+                />
+                <PassengerRow
+                  label="Child"
+                  sub="2-11 years"
+                  value={passengers.child}
+                  onDec={() => updatePassenger("child", -1)}
+                  onInc={() => updatePassenger("child", 1)}
+                />
+                <PassengerRow
+                  label="Infant"
+                  sub="Under 2"
+                  value={passengers.infant}
+                  onDec={() => updatePassenger("infant", -1)}
+                  onInc={() => updatePassenger("infant", 1)}
+                />
+                <button
+                  onClick={() => setActiveDropdown(null)}
+                  className="done-btn"
+                >
+                  Done
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* <div className="pill currency">
+            {currency.flag} {currency.code}
+            <ChevronDown
+              size={14}
+              onClick={() =>
+                setActiveDropdown(activeDropdown === "curr" ? null : "curr")
+              }
+            />
+            {activeDropdown === "curr" && (
+              <div className="dropdown" style={{ left: "auto", right: 0 }}>
+                {CURRENCIES.map((c) => (
+                  <button
+                    key={c.code}
+                    onClick={() => {
+                      setCurrency(c);
+                      setActiveDropdown(null);
+                    }}
+                    className="dropdown-item"
+                  >
+                    {c.flag} {c.code}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div> */}
+        </div>
+
+        <div className="form">
+          {tripType === "Multi-City" ? (
+            <>
+              {flights.map((flight, idx) => (
+                <div key={flight.id} className="multi-flight">
+                  <div className="multi-header">
+                    <div className="multi-title">Flight {idx + 1}</div>
+                    {flights.length > 2 && (
+                      <button
+                        onClick={() => removeFlight(flight.id)}
+                        className="x-btn"
+                      >
+                        <X size={14} />
+                      </button>
+                    )}
+                  </div>
+
+                  <div className="input-grid">
+                    <div className="input-row">
+                      <div className="field-group">
+                        <div className="field-label">From</div>
+                        <div className="field">
+                          <Plane size={16} style={{ color: "#1d6dc8" }} />
+                          <input
+                            placeholder="City or Airport"
+                            value={flight.from}
+                            onChange={(e) =>
+                              updateFlight(flight.id, "from", e.target.value)
+                            }
+                          />
+                        </div>
+                      </div>
+                      <div
+                        className="swap"
+                        onClick={() => swapMultiRoute(flight.id)}
+                      >
+                        <svg viewBox="0 0 28 28" fill="none">
+                          <circle cx="14" cy="14" r="14" />
+                          <path d="M10 11h6M14 8l2 3-2 3M18 17h-6M14 20l-2-3 2-3" />
+                        </svg>
+                      </div>
+                      <div className="field-group">
+                        <div className="field-label">To</div>
+                        <div className="field">
+                          <Plane size={16} style={{ color: "#1d6dc8" }} />
+                          <input
+                            placeholder="City or Airport"
+                            value={flight.to}
+                            onChange={(e) =>
+                              updateFlight(flight.id, "to", e.target.value)
+                            }
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="input-row">
+                      <div className="field-group">
+                        <div className="field-label">Departure Date</div>
+                        <div className="field">
+                          <Calendar size={16} style={{ color: "#ef4444" }} />
+                          <input
+                            type="date"
+                            value={flight.date}
+                            onChange={(e) =>
+                              updateFlight(flight.id, "date", e.target.value)
+                            }
+                          />
+                        </div>
+                      </div>
+                      {idx === 0 && (
+                        <div className="field-group">
+                          <div className="field-label">Contact Number</div>
+                          <div className="field">
+                            <Phone size={16} style={{ color: "#1d6dc8" }} />
+                            <input
+                              placeholder="+92 300 1234567"
+                              value={contact}
+                              onChange={(e) => setContact(e.target.value)}
+                            />
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+
+              <button onClick={addFlight} className="add-btn">
+                <span className="add-icon">
+                  <Plus size={14} />
+                </span>
+                Add Another Flight
+              </button>
+
+              <div className="search-section">
+                <button className="search-btn">
+                  <Search size={20} />
+                  Search Flights
+                </button>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="input-grid">
+                <div className="input-row">
+                  <div className="field-group">
+                    <div className="field-label">From</div>
+                    <div className="field">
+                      <Plane size={18} style={{ color: "#1d6dc8" }} />
+                      <input
+                        placeholder="City or Airport"
+                        value={from}
+                        onChange={(e) => setFrom(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  <div className="swap" onClick={swapRoute}>
+                    <svg viewBox="0 0 28 28" fill="none">
+                      <circle cx="14" cy="14" r="14" />
+                      <path d="M10 11h6M14 8l2 3-2 3M18 17h-6M14 20l-2-3 2-3" />
+                    </svg>
+                  </div>
+                  <div className="field-group">
+                    <div className="field-label">To</div>
+                    <div className="field">
+                      <Plane size={18} style={{ color: "#1d6dc8" }} />
+                      <input
+                        placeholder="City or Airport"
+                        value={to}
+                        onChange={(e) => setTo(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="input-row">
+                  <div className="field-group">
+                    <div className="field-label">Departure</div>
+                    <div className="field">
+                      <Calendar size={18} style={{ color: "#ef4444" }} />
+                      <input
+                        type="date"
+                        value={departDate}
+                        onChange={(e) => setDepartDate(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  {tripType === "Round Trip" && (
+                    <div className="field-group">
+                      <div className="field-label">Return</div>
+                      <div className="field">
+                        <Calendar size={18} style={{ color: "#ef4444" }} />
+                        <input
+                          type="date"
+                          value={returnDate}
+                          onChange={(e) => setReturnDate(e.target.value)}
+                        />
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="search-section">
+                <button className="search-btn">
+                  <Search size={20} />
+                  Search Flights
+                </button>
+              </div>
+            </>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
