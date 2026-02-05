@@ -128,12 +128,12 @@ button {
 }
 
 input:focus {
-  color: var(--white);
+  color: #000;
   outline: none;
 }
 
 input {
-  color: var(--white);
+  color: #000;
 }
 
 h1,
@@ -1699,7 +1699,7 @@ span {
 }
 
 .cta-items {
-  padding: 60px 45px;
+  padding: 80px 45px;
   border-radius: 20px;
   position: relative;
   background: radial-gradient(
@@ -7094,10 +7094,6 @@ span {
   width: 50px;
 }
 
-.price-range-wrapper {
-  /* Custom thumb styling */
-  /* Remove the default appearance for sliders in Firefox */
-}
 .price-range-wrapper .slider-container {
   position: relative;
   width: 100%;
@@ -10155,8 +10151,9 @@ input.main-search-input::placeholder {
   right: 0;
   bottom: 0;
 }
+
 @media (max-width: 1199px) {
   .testimonial-section .bag-shape {
     display: none;
   }
-} /*# sourceMappingURL=main.css.map */
+}

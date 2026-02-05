@@ -11,6 +11,7 @@ export default function TravelFeature() {
       >
         <div className="shape-1 float-bob-y">
           <img
+            className="m-auto mt-2"
             src="https://ex-coders.com/html/turmet/assets/img/plane-shape1.png"
             alt="img"
           />
@@ -28,17 +29,17 @@ export default function TravelFeature() {
                 <div className="feature-content">
                   <div className="section-title">
                     <span className="sub-title wow fadeInUp">
-                      Are you ready to travel?
+                      Ready to start your career abroad?
                     </span>
                     <h2 className="wow fadeInUp wow" data-wow-delay=".2s">
-                      World Leading Online Tour Booking Platform
+                      Your Trusted Partner for Global Work Permits
                     </h2>
                   </div>
                   <p className="wow fadeInUp wow" data-wow-delay=".3s">
-                    There are many variations of passages of Lorem Ipsum
-                    available, but the majority have suffered alteration in some
-                    form, by injected humour, or randomised words which don't
-                    look even slightly believable.
+                    We provide authentic and fast work permit services for top
+                    global destinations. Our team supports you at every
+                    step—from documentation to final visa approval—so that your
+                    career can grow at an international level.
                   </p>
                   <div className="feature-area">
                     <div className="line-shape">
@@ -47,6 +48,7 @@ export default function TravelFeature() {
                         alt="img"
                       />
                     </div>
+                    {/* Feature 1: Work Permit */}
                     <div
                       className="feature-items wow fadeInUp wow"
                       data-wow-delay=".5s"
@@ -54,14 +56,15 @@ export default function TravelFeature() {
                       <div className="feature-icon-item">
                         <div className="icon">
                           <img
+                            style={{ margin: "10px auto" }}
                             src="https://ex-coders.com/html/turmet/assets/img/icon/08.svg"
                             alt="img"
                           />
                         </div>
                         <div className="content">
                           <h5>
-                            Most Adventure <br />
-                            Tour Ever
+                            Professional <br />
+                            Work Permits
                           </h5>
                         </div>
                       </div>
@@ -71,12 +74,13 @@ export default function TravelFeature() {
                         </li>
                         <li>
                           <span>
-                            There are many variations of <br />
-                            passages of available,
+                            Schengen, UK, Canada and Gulf <br /> legal work
+                            permits.
                           </span>
                         </li>
                       </ul>
                     </div>
+                    {/* Feature 2: Documentation */}
                     <div
                       className="feature-items wow fadeInUp wow"
                       data-wow-delay=".7s"
@@ -84,14 +88,15 @@ export default function TravelFeature() {
                       <div className="feature-icon-item">
                         <div className="icon">
                           <img
+                            style={{ margin: "10px auto" }}
                             src="https://ex-coders.com/html/turmet/assets/img/icon/09.svg"
                             alt="img"
                           />
                         </div>
                         <div className="content">
                           <h5>
-                            Real Tour Starts <br />
-                            from Here
+                            Fast Track <br />
+                            Visa Processing
                           </h5>
                         </div>
                       </div>
@@ -101,8 +106,8 @@ export default function TravelFeature() {
                         </li>
                         <li>
                           <span>
-                            There are many variations of <br />
-                            passages of available,
+                            Hassle-free documentation and filing with
+                            <br /> a 99% success rate.
                           </span>
                         </li>
                       </ul>
@@ -113,7 +118,7 @@ export default function TravelFeature() {
                     className="theme-btn wow fadeInUp wow"
                     data-wow-delay=".9s"
                   >
-                    Contact US
+                    Get Free Consultation
                     <i className="fa-solid fa-arrow-right"></i>
                   </a>
                 </div>

@@ -2,30 +2,36 @@ import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 
+import c1 from "../../assets/home/c1.png";
+import c2 from "../../assets/home/c2.png";
+import c3 from "../../assets/home/c3.png";
+import c4 from "../../assets/home/c4.png";
+import c5 from "../../assets/home/c5.png";
+
 const categories = [
   {
-    img: "https://ex-coders.com/html/turmet/assets/img/destination/category1.jpg",
-    title: "Adventure",
+    img: c1,
+    title: "Ziarat",
     tours: "6 Tour",
   },
   {
-    img: "https://ex-coders.com/html/turmet/assets/img/destination/category2.jpg",
-    title: "Adventure",
+    img: c2,
+    title: "Ziarat",
     tours: "6 Tour",
   },
   {
-    img: "https://ex-coders.com/html/turmet/assets/img/destination/category3.jpg",
-    title: "Adventure",
+    img: c5,
+    title: "Ziarat",
     tours: "6 Tour",
   },
   {
-    img: "https://ex-coders.com/html/turmet/assets/img/destination/category4.jpg",
-    title: "Adventure",
+    img: c4,
+    title: "Hajj & Umrah",
     tours: "6 Tour",
   },
   {
-    img: "https://ex-coders.com/html/turmet/assets/img/destination/category5.jpg",
-    title: "Adventure",
+    img: c5,
+    title: "Ziarat",
     tours: "6 Tour",
   },
 ];
@@ -67,12 +73,12 @@ export default function Destination() {
               <SwiperSlide key={index}>
                 <div className="destination-category-item">
                   <div className="category-image">
-                    <img src={item.img} alt="img" />
+                    <img height={400} src={item.img} alt="img" />
                     <div className="category-content">
                       <h5>
                         <a href="destination-details.html">{item.title}</a>
                       </h5>
-                      <p>{item.tours}</p>
+                      {/* <p>{item.tours}</p> */}
                     </div>
                   </div>
                 </div>

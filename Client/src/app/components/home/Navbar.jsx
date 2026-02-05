@@ -2,6 +2,8 @@ import React from "react";
 
 import darkLogo from "../../assets/header/black-logo.svg";
 import whiteLogo from "../../assets/header/white-log.svg";
+import logo from "../../assets/header/logo.png";
+import { Link } from "react-router-dom";
 export default function Navbar() {
   return (
     <div>
@@ -11,9 +13,14 @@ export default function Navbar() {
             <div className="offcanvas__content">
               <div className="offcanvas__top mb-5 d-flex justify-content-between align-items-center">
                 <div className="offcanvas__logo">
-                  <a href="index.html">
-                    <img src={darkLogo} alt="logo-img" />
-                  </a>
+                  <Link to="/">
+                    <img
+                      style={{ height: "60px" }}
+                      src={logo}
+                      alt="logo-img"
+                      className="h-10 w-auto"
+                    />
+                  </Link>
                 </div>
                 <div className="offcanvas__close">
                   <button>
@@ -21,11 +28,6 @@ export default function Navbar() {
                   </button>
                 </div>
               </div>
-              <p className="text d-none d-xl-block">
-                Nullam dignissim, ante scelerisque the is euismod fermentum odio
-                sem semper the is erat, a feugiat leo urna eget eros. Duis
-                Aenean a imperdiet risus.
-              </p>
               <div className="mobile-menu fix mb-3"></div>
               <div className="offcanvas__contact">
                 <h4>Contact Info</h4>
@@ -36,7 +38,8 @@ export default function Navbar() {
                     </div>
                     <div className="offcanvas__contact-text">
                       <a target="_blank" href="#">
-                        Main Street, Melbourne, Australia
+                        Head Office: Kotla Arab Ali Khan Road, Langrial, Gujrat,
+                        Pakistan.
                       </a>
                     </div>
                   </li>
@@ -72,7 +75,7 @@ export default function Navbar() {
                 <div className="header-button mt-4">
                   <a href="contact.html" className="theme-btn">
                     {" "}
-                    Request A Quote <i className="fa-solid fa-arrow-right"></i>
+                    Start Here <i className="fa-solid fa-arrow-right"></i>
                   </a>
                 </div>
                 <div className="social-icon d-flex align-items-center">
@@ -122,7 +125,7 @@ export default function Navbar() {
                 </li>
                 <li>
                   <i className="fa-regular fa-clock"></i>
-                  Mon to Friday: 8.00 am - 7.00 pm, Austria
+                  Mon to Friday: 8.00 am - 7.00 pm, Gujrat
                 </li>
                 <li>
                   <i className="fa-solid fa-phone"></i>
@@ -137,13 +140,25 @@ export default function Navbar() {
             <div className="mega-menu-wrapper">
               <div className="header-main">
                 <div className="logo">
-                  <a href="index.html" className="header-logo">
-                    <img src={whiteLogo} alt="logo-img" />
-                  </a>
+                  <Link to="/" className="header-logo">
+                    <img
+                      src={logo}
+                      style={{ height: "60px" }}
+                      alt="logo-img"
+                      className="h-10 w-auto md:h-16 lg:h-20 mb-2.5"
+                    />
+                  </Link>
+
+                  {/* If you are using the logo-2 div for a secondary header style: */}
                   <div className="logo-2">
-                    <a href="index.html">
-                      <img src={darkLogo} alt="" />
-                    </a>
+                    <Link to="/">
+                      <img
+                        style={{ height: "60px" }}
+                        src={logo}
+                        alt="logo-img"
+                        className="h-12 w-auto md:h-24"
+                      />
+                    </Link>
                   </div>
                 </div>
                 <div className="header-right d-flex justify-content-end align-items-center">
@@ -152,101 +167,13 @@ export default function Navbar() {
                       <nav id="mobile-menu">
                         <ul>
                           <li className="has-dropdown active menu-thumb">
-                            <a href="index.html">
-                              Home
-                              {/* <i className="fa-solid fa-chevron-down"></i> */}
-                            </a>
-                            {/* <ul className="submenu has-homemenu">
-                              <li>
-                                <div className="homemenu-items">
-                                  <div className="homemenu">
-                                    <div className="homemenu-thumb">
-                                      <img
-                                        src="https://ex-coders.com/html/turmet/assets/img/header/home-1.jpg"
-                                        alt="img"
-                                      />
-                                      <div className="demo-button">
-                                        <a
-                                          href="index.html"
-                                          className="theme-btn"
-                                        >
-                                          Multi Page
-                                        </a>
-                                        <a
-                                          href="index-one-page.html"
-                                          className="theme-btn"
-                                        >
-                                          One Page
-                                        </a>
-                                      </div>
-                                    </div>
-                                    <div className="homemenu-content text-center">
-                                      <h4 className="homemenu-title">
-                                        Tour Booking
-                                      </h4>
-                                    </div>
-                                  </div>
-                                  <div className="homemenu">
-                                    <div className="homemenu-thumb mb-15">
-                                      <img
-                                        src="https://ex-coders.com/html/turmet/assets/img/header/home-2.jpg"
-                                        alt="img"
-                                      />
-                                      <div className="demo-button">
-                                        <a
-                                          href="index-2.html"
-                                          className="theme-btn"
-                                        >
-                                          Multi Page
-                                        </a>
-                                        <a
-                                          href="index-two-page.html"
-                                          className="theme-btn"
-                                        >
-                                          One Page
-                                        </a>
-                                      </div>
-                                    </div>
-                                    <div className="homemenu-content text-center">
-                                      <h4 className="homemenu-title">
-                                        Travel Booking
-                                      </h4>
-                                    </div>
-                                  </div>
-                                  <div className="homemenu">
-                                    <div className="homemenu-thumb mb-15">
-                                      <img
-                                        src="https://ex-coders.com/html/turmet/assets/img/header/home-3.jpg"
-                                        alt="img"
-                                      />
-                                      <div className="demo-button">
-                                        <a
-                                          href="index-3.html"
-                                          className="theme-btn"
-                                        >
-                                          Multi Page
-                                        </a>
-                                        <a
-                                          href="index-three-page.html"
-                                          className="theme-btn"
-                                        >
-                                          One Page
-                                        </a>
-                                      </div>
-                                    </div>
-                                    <div className="homemenu-content text-center">
-                                      <h4 className="homemenu-title">
-                                        Flight Booking
-                                      </h4>
-                                    </div>
-                                  </div>
-                                </div>
-                              </li>
-                            </ul> */}
+                            <Link to="/">Home</Link>
                           </li>
-                          {/* Mobile-only Home dropdown removed */}
                           <li>
                             <a href="about.html">About Us</a>
+                          </li>
+                          <li>
+                            <Link to="/contact-us">Contact Us</Link>
                           </li>
                           <li>
                             <a href="destination-details.html">
@@ -267,7 +194,7 @@ export default function Navbar() {
                               </li>
                             </ul>
                           </li>
-                          <li>
+                          {/* <li>
                             <a href="tour-details.html">
                               Spiritual Journey
                               <i className="fa-solid fa-chevron-down"></i>
@@ -300,12 +227,15 @@ export default function Navbar() {
                                 <a href="team.html">Work Visa</a>
                               </li>
                             </ul>
-                          </li>
+                          </li> */}
                           <li>
                             <a href="news-details.html">Blog</a>
                           </li>
                           <li>
-                            <a href="contact.html">Translation</a>
+                            <Link to="/bank-accounts">Bank Accounts</Link>
+                          </li>
+                          <li>
+                            <Link to="/be-partner">Be Partner</Link>
                           </li>
                           <li className="has-dropdown">
                             <a href="contact.html">
@@ -327,7 +257,7 @@ export default function Navbar() {
                   </div>
                   <a href="contact.html" className="theme-btn">
                     {" "}
-                    Request A Quote <i className="fa-solid fa-arrow-right"></i>
+                    Start Here <i className="fa-solid fa-arrow-right"></i>
                   </a>
                   <div className="header__hamburger d-xl-none my-auto">
                     <div className="sidebar__toggle">
