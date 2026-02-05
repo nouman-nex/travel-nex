@@ -1,5 +1,4 @@
 import React from "react";
-import Navbar from "../../components/home/Navbar";
 import Hero from "../../components/home/Hero";
 import Feature from "../../components/home/Feature";
 import Destination from "../../components/home/Destination";
@@ -9,24 +8,27 @@ import PopularDestination from "../../components/home/PopularDestination";
 import DealsOffer from "../../components/home/DealsOffer";
 import Testimonials from "../../components/home/Testimonials";
 import TravelFeature from "../../components/home/TravelFeature";
-import Footer from "../../components/home/Footer";
 import SearchEngine from "../../components/search/SearchEngine";
+import CTA2 from "../../components/home/CTA2";
+import Blogs from "../../components/home/Blogs";
+import CountriesCarousel from "../../components/home/CountriesCarousel";
 
 export default function Home() {
   return (
     <div>
-      <Navbar />
       <Hero />
       <SearchEngine />
-      <Feature />
+      {/* <Feature /> */}
       <CTA />
       <Destination />
-      {/* <About />
+      {/* <About /> */}
       <PopularDestination />
-      <DealsOffer /> */}
+      {/* <DealsOffer /> */}
       <TravelFeature />
+      <CountriesCarousel />
+      <CTA2 />
+      <Blogs />
       <Testimonials />
-      <Footer />
     </div>
   );
 }

@@ -51,7 +51,7 @@ function Header() {
   const { headerOptions } = useJumboLayout();
   const { theme } = useJumboTheme();
   const isBelowLg = useMediaQuery(
-    theme.breakpoints.down(headerOptions?.drawerBreakpoint ?? "xl")
+    theme.breakpoints.down(headerOptions?.drawerBreakpoint ?? "xl"),
   );
   const isBelowMd = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -215,9 +215,7 @@ function Header() {
 
           {/* Dashboard (if needed) */}
           <Tooltip title="Dashboard">
-            <Link
-              to={`${User.roles.includes("User") ? "/" : "/adminDashboard"}`}
-            >
+            <Link to={"/"}>
               <IconButton
                 sx={{
                   color: "text.secondary",

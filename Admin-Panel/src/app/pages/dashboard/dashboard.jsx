@@ -476,11 +476,11 @@ function Dashboard() {
     getDashboardData();
   }, [getDashboardData]);
 
-  useEffect(() => {
-    if (User && !User.roles?.includes("User")) {
-      navigate("/adminDashboard");
-    }
-  }, [User, navigate]);
+  // useEffect(() => {
+  //   if (User && !User.roles?.includes("User")) {
+  //     navigate("/adminDashboard");
+  //   }
+  // }, [User, navigate]);
 
   // Memoized stats data
   const statsData = useMemo(

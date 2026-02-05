@@ -50,31 +50,31 @@ const AuthUserPopover = () => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [loadingUsers, setLoadingUsers] = useState(false);
 
-  // Fetch all user accounts
-  const fetchUserAccounts = () => {
-    setLoadingUsers(true);
-    postRequest(
-      "/getAllAccountsOfUser",
-      {},
-      (response) => {
-        if (response.data) {
-          setUsersData(response.data);
-        } else {
-          toast.error("Failed to fetch user accounts");
-        }
-        setLoadingUsers(false);
-      },
-      (error) => {
-        toast.error("Error fetching user accounts");
-        setLoadingUsers(false);
-      }
-    );
-  };
+  // // Fetch all user accounts
+  // const fetchUserAccounts = () => {
+  //   setLoadingUsers(true);
+  //   postRequest(
+  //     "/getAllAccountsOfUser",
+  //     {},
+  //     (response) => {
+  //       if (response.data) {
+  //         setUsersData(response.data);
+  //       } else {
+  //         toast.error("Failed to fetch user accounts");
+  //       }
+  //       setLoadingUsers(false);
+  //     },
+  //     (error) => {
+  //       toast.error("Error fetching user accounts");
+  //       setLoadingUsers(false);
+  //     }
+  //   );
+  // };
 
-  // Load users when component mounts
-  useEffect(() => {
-    fetchUserAccounts();
-  }, []);
+  // // Load users when component mounts
+  // useEffect(() => {
+  //   fetchUserAccounts();
+  // }, []);
 
   // Handle logout
   async function handleLogout() {

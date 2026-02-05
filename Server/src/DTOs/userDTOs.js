@@ -17,12 +17,9 @@ const registerSchema = Joi.object({
     "any.required": "Password is required",
   }),
 
-  phone: Joi.string()
-    .pattern(/^[\+]?[1-9][\d]{0,15}$/)
-    .optional()
-    .messages({
-      "string.pattern.base": "Please provide a valid phone number",
-    }),
+  phone: Joi.string().optional().messages({
+    "string.pattern.base": "Please provide a valid phone number",
+  }),
 });
 
 const loginSchema = Joi.object({

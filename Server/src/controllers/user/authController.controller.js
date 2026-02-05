@@ -12,7 +12,7 @@ const register = async (req, res) => {
     });
   }
 
-  const { name, email, password, phone } = req.body;
+  const { name, email, password } = req.body;
 
   try {
     // Check if user exists
@@ -33,7 +33,6 @@ const register = async (req, res) => {
       name,
       email,
       password: hashedPassword,
-      phone,
     });
 
     // Generate token
@@ -58,9 +57,6 @@ const register = async (req, res) => {
   }
 };
 
-// @desc    Login user
-// @route   POST /api/v1/auth/login
-// @access  Public
 const login = async (req, res) => {
   // Validate input
   const { error } = loginSchema.validate(req.body);
@@ -118,9 +114,6 @@ const login = async (req, res) => {
   }
 };
 
-// @desc    Get current logged in user
-// @route   GET /api/v1/auth/me
-// @access  Private
 const getMe = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
@@ -137,19 +130,8 @@ const getMe = async (req, res) => {
   }
 };
 
-// @desc    Log user out / clear cookie
-// @route   GET /api/v1/auth/logout
-// @access  Private
-const logout = (req, res) => {
-  res.status(200).json({
-    success: true,
-    data: {},
-  });
-};
-
 module.exports = {
   register,
   login,
   getMe,
-  logout,
 };

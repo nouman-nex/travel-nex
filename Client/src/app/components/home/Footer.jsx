@@ -1,6 +1,7 @@
 import React from "react";
 import logo from "../../assets/header/logo.png";
 import { Clock } from "lucide-react";
+import { Link } from "react-router-dom";
 export default function Footer() {
   return (
     <div>
@@ -23,7 +24,7 @@ export default function Footer() {
                   <div className="widget-head">
                     <a href="index.html">
                       <img
-                        style={{ height: "100px", margin: "0 auto" }}
+                        style={{ height: "70px", margin: "0 auto" }}
                         src={logo}
                         alt="img"
                       />
@@ -72,7 +73,7 @@ export default function Footer() {
                   </div>
                   <ul className="list-items">
                     <li>
-                      <a href="index.html">Home</a>
+                      <Link to="/">Home</Link>
                     </li>
                     <li>
                       <a href="index.html">About Us</a>
@@ -81,10 +82,16 @@ export default function Footer() {
                       <a href="news.html">Blog</a>
                     </li>
                     <li>
+                      <Link to="/contact-us">Contact Us</Link>
+                    </li>
+                    <li>
                       <a href="tour-details.html">Services</a>
                     </li>
                     <li>
-                      <a href="tour-details.html">Bank Account</a>
+                      <Link to="/bank-accounts">Bank Account</Link>
+                    </li>
+                    <li>
+                      <Link to="/be-partner">Be partner with us</Link>
                     </li>
                   </ul>
                 </div>
@@ -98,6 +105,11 @@ export default function Footer() {
                     <h4>Branches</h4>
                   </div>
                   <ul className="space-y-2">
+                    <li className="flex items-center gap-2">
+                      <a href="#" className="text-white cursor-not-allowed">
+                        Gujrat
+                      </a>
+                    </li>
                     <li className="flex items-center gap-2">
                       <a href="#" className="text-white cursor-not-allowed">
                         Rawalpindi

@@ -16,27 +16,23 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import * as Yup from "yup";
-
-import { postRequest } from "../../../../../backendServices/ApiCalls";
 import { useAuth } from "@app/_components/_core/AuthProvider/hooks";
-import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
+import { api } from "../../../../../backendServices/ApiCalls";
 
-// Updated validation schema with confirm password
+// Updated validation schema
 const validationSchema = Yup.object({
-  firstName: Yup.string().required("First name is required"),
-  lastName: Yup.string().required("Last name is required"),
-  username: Yup.string()
-    .min(3, "Username must be at least 3 characters")
-    .required("Username is required"),
+  name: Yup.string().required("Name is required"),
   email: Yup.string()
     .email("Invalid email format")
     .required("Email is required"),
   password: Yup.string()
-    .min(8, "Password must be at least 8 characters")
+    .min(6, "Password must be at least 6 characters")
     .required("Password is required"),
   confirmPassword: Yup.string()
     .oneOf([Yup.ref("password"), null], "Passwords must match")
     .required("Confirm password is required"),
+  phone: Yup.string().optional(),
 });
 
 const SignupForm = () => {
@@ -45,56 +41,51 @@ const SignupForm = () => {
   const { isAuthenticated, setIsAuthenticated, setUser } = useAuth();
   const navigate = useNavigate();
 
-  const [searchParams] = useSearchParams();
-  const referralCode = searchParams.get("ref");
-
   if (isAuthenticated) {
     return <Navigate to="/" />;
   }
 
-  const formik = useFormik({
-    initialValues: {
-      firstName: "",
-      lastName: "",
-      username: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    },
-    validationSchema,
-    onSubmit: (values, { setSubmitting }) => {
-      setLoading(true);
+const formik = useFormik({
+  initialValues: {
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    phone: "",
+  },
+  validationSchema,
+  onSubmit: async (values, { setSubmitting }) => {
+    setLoading(true);
+
+    try {
       const { confirmPassword, ...dataToSend } = values;
-      const finalData = { ...dataToSend, ref: referralCode };
 
-      postRequest(
-        "/register",
-        finalData,
-        (response) => {
-          setUser(response.data.user);
-          setLoading(false);
-          setSubmitting(false);
-          if (response.data?.status === "success") {
-            localStorage.setItem("token", response.data.token);
-            setIsAuthenticated(true);
-            toast.success("You have been Registered");
-          } else {
-            toast.error(response.data?.message || "Signup failed!");
-          }
-        },
-        (error) => {
-          setLoading(false);
-          setSubmitting(false);
-          toast.error(
-            error.response?.data?.message || "Signup failed! Please try again."
-          );
-        }
+      const response = await api.post("/v1/auth/register", dataToSend);
+
+      if (response.data?.success) {
+        localStorage.setItem("token", response.data.data.token);
+        setUser(response.data.data.user);
+        setIsAuthenticated(true);
+        toast.success("You have been Registered");
+        navigate("/");
+      } else {
+        toast.error(response.data?.error || "Signup failed!");
+      }
+    } catch (error) {
+      toast.error(
+        error.response?.data?.error ||
+          "Signup failed! Please try again."
       );
-    },
-  });
+    } finally {
+      setLoading(false);
+      setSubmitting(false);
+    }
+  },
+});
 
-  // Check if referral code is available and form is valid
-  const isFormDisabled = !referralCode || formik.isSubmitting || loading;
+
+  // Check if form is valid
+  const isFormDisabled = formik.isSubmitting || loading;
 
   return (
     <>
@@ -105,79 +96,38 @@ const SignupForm = () => {
 
         <form onSubmit={formik.handleSubmit}>
           <Stack spacing={1}>
-            {/* Referral Code */}
             <TextField
-              name="ref"
-              label="Referral Code"
+              name="name"
+              label="Full Name"
               fullWidth
-              disabled
-              value={referralCode || ""}
-              sx={{ pl: 0.5 }}
-              error={!referralCode}
-              helperText={!referralCode ? "Referral code is required" : ""}
+              value={formik.values.name}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.name && Boolean(formik.errors.name)}
+              helperText={formik.touched.name && formik.errors.name}
             />
 
-            <Grid container spacing={0.5}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  name="firstName"
-                  label="First Name"
-                  fullWidth
-                  value={formik.values.firstName}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  error={
-                    formik.touched.firstName && Boolean(formik.errors.firstName)
-                  }
-                  helperText={
-                    formik.touched.firstName && formik.errors.firstName
-                  }
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  name="lastName"
-                  label="Last Name"
-                  fullWidth
-                  value={formik.values.lastName}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  error={
-                    formik.touched.lastName && Boolean(formik.errors.lastName)
-                  }
-                  helperText={formik.touched.lastName && formik.errors.lastName}
-                />
-              </Grid>
-            </Grid>
+            <TextField
+              name="email"
+              label="Email"
+              fullWidth
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.email && Boolean(formik.errors.email)}
+              helperText={formik.touched.email && formik.errors.email}
+            />
 
-            <Grid container spacing={0.5}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  name="username"
-                  label="Username"
-                  fullWidth
-                  value={formik.values.username}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  error={
-                    formik.touched.username && Boolean(formik.errors.username)
-                  }
-                  helperText={formik.touched.username && formik.errors.username}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  name="email"
-                  label="Email"
-                  fullWidth
-                  value={formik.values.email}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  error={formik.touched.email && Boolean(formik.errors.email)}
-                  helperText={formik.touched.email && formik.errors.email}
-                />
-              </Grid>
-            </Grid>
+            <TextField
+              name="phone"
+              label="Phone (Optional)"
+              fullWidth
+              value={formik.values.phone}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.phone && Boolean(formik.errors.phone)}
+              helperText={formik.touched.phone && formik.errors.phone}
+            />
 
             <TextField
               name="password"
@@ -257,8 +207,6 @@ const SignupForm = () => {
             >
               {formik.isSubmitting || loading ? (
                 <CircularProgress size={24} />
-              ) : !referralCode ? (
-                "Referral Code Required"
               ) : (
                 "Signup"
               )}

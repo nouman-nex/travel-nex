@@ -20,7 +20,7 @@ const Footer = () => {
         }}
       >
         <Typography variant={"body1"} color={"text.primary"}>
-          Copyright MobiCrypto © {new Date().getFullYear()}
+          Copyright NexaGen Solution © {new Date().getFullYear()}
         </Typography>
       </Div>
     </Div>

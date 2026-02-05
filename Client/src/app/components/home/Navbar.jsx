@@ -3,6 +3,7 @@ import React from "react";
 import darkLogo from "../../assets/header/black-logo.svg";
 import whiteLogo from "../../assets/header/white-log.svg";
 import logo from "../../assets/header/logo.png";
+import { Link } from "react-router-dom";
 export default function Navbar() {
   return (
     <div>
@@ -12,9 +13,14 @@ export default function Navbar() {
             <div className="offcanvas__content">
               <div className="offcanvas__top mb-5 d-flex justify-content-between align-items-center">
                 <div className="offcanvas__logo">
-                  <a href="index.html">
-                    <img src={logo} alt="logo-img" className="h-10 w-auto" />
-                  </a>
+                  <Link to="/">
+                    <img
+                      style={{ height: "60px" }}
+                      src={logo}
+                      alt="logo-img"
+                      className="h-10 w-auto"
+                    />
+                  </Link>
                 </div>
                 <div className="offcanvas__close">
                   <button>
@@ -22,11 +28,6 @@ export default function Navbar() {
                   </button>
                 </div>
               </div>
-              <p className="text d-none d-xl-block">
-                Nullam dignissim, ante scelerisque the is euismod fermentum odio
-                sem semper the is erat, a feugiat leo urna eget eros. Duis
-                Aenean a imperdiet risus.
-              </p>
               <div className="mobile-menu fix mb-3"></div>
               <div className="offcanvas__contact">
                 <h4>Contact Info</h4>
@@ -124,7 +125,7 @@ export default function Navbar() {
                 </li>
                 <li>
                   <i className="fa-regular fa-clock"></i>
-                  Mon to Friday: 8.00 am - 7.00 pm, Austria
+                  Mon to Friday: 8.00 am - 7.00 pm, Gujrat
                 </li>
                 <li>
                   <i className="fa-solid fa-phone"></i>
@@ -139,28 +140,25 @@ export default function Navbar() {
             <div className="mega-menu-wrapper">
               <div className="header-main">
                 <div className="logo">
-                  <a href="index.html" className="header-logo">
+                  <Link to="/" className="header-logo">
                     <img
                       src={logo}
+                      style={{ height: "60px" }}
                       alt="logo-img"
-                      /* h-10: Height on mobile (40px)
-         w-auto: Keeps aspect ratio
-         md:h-16: Height on tablets/small laptops (64px)
-         lg:h-20: Height on large desktops (80px)
-      */
                       className="h-10 w-auto md:h-16 lg:h-20 mb-2.5"
                     />
-                  </a>
+                  </Link>
 
                   {/* If you are using the logo-2 div for a secondary header style: */}
                   <div className="logo-2">
-                    <a href="index.html">
+                    <Link to="/">
                       <img
+                        style={{ height: "60px" }}
                         src={logo}
                         alt="logo-img"
                         className="h-12 w-auto md:h-24"
                       />
-                    </a>
+                    </Link>
                   </div>
                 </div>
                 <div className="header-right d-flex justify-content-end align-items-center">
@@ -169,7 +167,7 @@ export default function Navbar() {
                       <nav id="mobile-menu">
                         <ul>
                           <li className="has-dropdown active menu-thumb">
-                            <a href="index.html">Home</a>
+                            <Link to="/">Home</Link>
                           </li>
                           <li>
                             <a href="about.html">About Us</a>
@@ -231,7 +229,7 @@ export default function Navbar() {
                             <a href="news-details.html">Blog</a>
                           </li>
                           <li>
-                            <a href="contact.html">Translation</a>
+                            <Link to="/bank-accounts">Bank Accounts</Link>
                           </li>
                           <li className="has-dropdown">
                             <a href="contact.html">

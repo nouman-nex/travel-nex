@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 
+import d1 from "../../assets/home/d1.png";
+import d2 from "../../assets/home/d2.png";
+
 const destinations = [
   {
     id: 1,
@@ -23,64 +26,64 @@ const destinations = [
   },
   {
     id: 3,
-    image: "https://ex-coders.com/html/turmet/assets/img/destination/03.jpg",
-    location: "Indonesia",
+    image: d1,
+    location: "Pakistan",
     rating: 4.7,
-    title: "Java & Bali One Life Adventure",
+    title: "Hunza valley",
     duration: "10 Days",
     travelers: "50+",
     price: 59.0,
   },
   {
     id: 4,
-    image: "https://ex-coders.com/html/turmet/assets/img/destination/04.jpg",
-    location: "Indonesia",
+    image: d2,
+    location: "Pakistan",
     rating: 4.7,
-    title: "Places To Travel In November",
+    title: "Swat",
     duration: "10 Days",
     travelers: "50+",
     price: 59.0,
   },
-  {
-    id: 5,
-    image: "https://ex-coders.com/html/turmet/assets/img/destination/05.jpg",
-    location: "Indonesia",
-    rating: 4.7,
-    title: "Brooklyn Beach Resort Tour",
-    duration: "10 Days",
-    travelers: "heavy:50+",
-    price: 59.0,
-  },
-  {
-    id: 6,
-    image: "https://ex-coders.com/html/turmet/assets/img/destination/06.jpg",
-    location: "Indonesia",
-    rating: 4.7,
-    title: "Pak Chumphon Town Tour",
-    duration: "10 Days",
-    travelers: "50+",
-    price: 59.0,
-  },
-  {
-    id: 7,
-    image: "https://ex-coders.com/html/turmet/assets/img/destination/07.jpg",
-    location: "Indonesia",
-    rating: 4.7,
-    title: "Brooklyn Beach Resort Tour",
-    duration: "10 Days",
-    travelers: "50+",
-    price: 59.0,
-  },
-  {
-    id: 8,
-    image: "https://ex-coders.com/html/turmet/assets/img/destination/08.jpg",
-    location: "Indonesia",
-    rating: 4.7,
-    title: "Java & Bali One Life Adventure",
-    duration: "10 Days",
-    travelers: "50+",
-    price: 59.0,
-  },
+  // {
+  //   id: 5,
+  //   image: "https://ex-coders.com/html/turmet/assets/img/destination/05.jpg",
+  //   location: "Indonesia",
+  //   rating: 4.7,
+  //   title: "Brooklyn Beach Resort Tour",
+  //   duration: "10 Days",
+  //   travelers: "heavy:50+",
+  //   price: 59.0,
+  // },
+  // {
+  //   id: 6,
+  //   image: "https://ex-coders.com/html/turmet/assets/img/destination/06.jpg",
+  //   location: "Indonesia",
+  //   rating: 4.7,
+  //   title: "Pak Chumphon Town Tour",
+  //   duration: "10 Days",
+  //   travelers: "50+",
+  //   price: 59.0,
+  // },
+  // {
+  //   id: 7,
+  //   image: "https://ex-coders.com/html/turmet/assets/img/destination/07.jpg",
+  //   location: "Indonesia",
+  //   rating: 4.7,
+  //   title: "Brooklyn Beach Resort Tour",
+  //   duration: "10 Days",
+  //   travelers: "50+",
+  //   price: 59.0,
+  // },
+  // {
+  //   id: 8,
+  //   image: "https://ex-coders.com/html/turmet/assets/img/destination/08.jpg",
+  //   location: "Indonesia",
+  //   rating: 4.7,
+  //   title: "Java & Bali One Life Adventure",
+  //   duration: "10 Days",
+  //   travelers: "50+",
+  //   price: 59.0,
+  // },
 ];
 
 function DestinationCard({ destination, isLiked, onToggleLike }) {
@@ -160,10 +163,10 @@ export default function PopularDestination() {
           <div className="section-title-area justify-content-between">
             <div className="section-title">
               <span className="sub-title wow fadeInUp">
-                Best Recommended Places
+                Best Recommended Places for International and Domestic Tours
               </span>
               <h2 className="wow fadeInUp" data-wow-delay=".3s">
-                Popular Destination we offer for all
+                Visit Visa Destination we offer for all
               </h2>
             </div>
             <a

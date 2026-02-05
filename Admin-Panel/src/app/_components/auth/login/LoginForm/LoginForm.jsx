@@ -1,7 +1,17 @@
 import React, { useState } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import { TextField, Checkbox, FormControlLabel, Button, Grid, InputAdornment, IconButton, FormGroup, CircularProgress } from "@mui/material";
+import {
+  TextField,
+  Checkbox,
+  FormControlLabel,
+  Button,
+  Grid,
+  InputAdornment,
+  IconButton,
+  FormGroup,
+  CircularProgress,
+} from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useAuth } from "@app/_components/_core/AuthProvider/hooks";
 import { Link, useNavigate } from "react-router-dom";
@@ -17,7 +27,7 @@ const validationSchema = Yup.object({
         const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
         const isUsername = /^[a-zA-Z0-9_-]+$/.test(value);
         return isEmail || isUsername;
-      }
+      },
     ),
   password: Yup.string().required("Password is required"),
 });
@@ -30,11 +40,14 @@ const LoginForm = () => {
 
   const handleSubmit = async (values) => {
     try {
-      const response = await login({ email: values.identifier, password: values.password });
-      if (response && response.resFromBackend) {
-        const { status, message } = response.resFromBackend;
-        notify(message, status);
-        if (status === "success") navigate("/");
+      const response = await login({
+        email: values.identifier,
+        password: values.password,
+      });
+
+      if (response?.token) {
+        notify("Login successful", "success");
+        navigate("/");
       }
     } catch (error) {
       notify(error.message || "Login failed", "error");
@@ -84,7 +97,10 @@ const LoginForm = () => {
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
-                      <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
+                      <IconButton
+                        onClick={() => setShowPassword(!showPassword)}
+                        edge="end"
+                      >
                         {showPassword ? <Visibility /> : <VisibilityOff />}
                       </IconButton>
                     </InputAdornment>
@@ -92,14 +108,29 @@ const LoginForm = () => {
                 }}
               />
             </Grid>
-            <Grid item xs={12} container justifyContent="space-between" alignItems="center">
+            <Grid
+              item
+              xs={12}
+              container
+              justifyContent="space-between"
+              alignItems="center"
+            >
               <FormGroup>
                 <FormControlLabel
-                  control={<Checkbox name="rememberMe" checked={values.rememberMe} onChange={handleChange} />}
+                  control={
+                    <Checkbox
+                      name="rememberMe"
+                      checked={values.rememberMe}
+                      onChange={handleChange}
+                    />
+                  }
                   label="Remember Me"
                 />
               </FormGroup>
-              <Link to="/auth/forgot-password" style={{ textDecoration: "none" }}>
+              <Link
+                to="/auth/forgot-password"
+                style={{ textDecoration: "none" }}
+              >
                 Forgot your password?
               </Link>
             </Grid>
@@ -111,16 +142,20 @@ const LoginForm = () => {
                 color="primary"
                 disabled={loading}
                 sx={{
-                  boxShadow: 'none',
+                  boxShadow: "none",
                   pt: 1,
                   px: 3,
-                  color: 'white',
-                  background: 'linear-gradient(to right, #AC9B6D, #6A5637)',
-                  '&:hover': {
-                    background: 'linear-gradient(to right, #BFA670, #7A5F3A)',
+                  color: "white",
+                  background: "linear-gradient(to right, #AC9B6D, #6A5637)",
+                  "&:hover": {
+                    background: "linear-gradient(to right, #BFA670, #7A5F3A)",
                   },
                 }}
-                startIcon={loading ? <CircularProgress size={20} color="inherit" /> : null}
+                startIcon={
+                  loading ? (
+                    <CircularProgress size={20} color="inherit" />
+                  ) : null
+                }
               >
                 {loading ? "Logging In..." : "Login"}
               </Button>

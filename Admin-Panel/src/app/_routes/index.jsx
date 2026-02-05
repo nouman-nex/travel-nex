@@ -9,7 +9,6 @@ import dashboard from "@app/pages/dashboard/dashboard";
 import AdminDashboard from "@app/pages/admin/dashboard/AdminDashboard";
 import Profile from "@app/pages/dashboards/profile";
 import Logout from "@app/pages/dashboards/logout";
-import Test from "../pages/tests/test";
 
 import { StretchedLayout } from "@app/_layouts/StretchedLayout";
 import { SoloLayout } from "@app/_layouts/SoloLayout";
@@ -24,10 +23,6 @@ const routes = [
       {
         path: "",
         element: <Page Component={dashboard} hoc={withAuth} />,
-      },
-      {
-        path: "testUsers",
-        element: <Page Component={Test} />,
       },
       {
         path: "adminDashboard",

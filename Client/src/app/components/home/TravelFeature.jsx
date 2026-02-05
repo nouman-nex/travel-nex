@@ -74,8 +74,8 @@ export default function TravelFeature() {
                         </li>
                         <li>
                           <span>
-                            Schengen, UK, Canada aur Gulf <br />
-                            ke legal work permits.
+                            Schengen, UK, Canada and Gulf <br /> legal work
+                            permits.
                           </span>
                         </li>
                       </ul>

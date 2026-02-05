@@ -28,7 +28,7 @@ app.use(limiter);
 // CORS
 app.use(
   cors({
-    origin: serverConfigs.CLIENT_URL,
+    origin: [serverConfigs.CLIENT_URL, "http://localhost:5173"],
     credentials: true,
   }),
 );

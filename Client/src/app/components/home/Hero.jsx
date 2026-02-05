@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 const slides = [
   {
@@ -30,6 +31,7 @@ const slides = [
 ];
 
 export default function HeroCopy() {
+  const navigate = useNavigate();
   const [current, setCurrent] = useState(0);
   const [prev, setPrev] = useState(null);
   const [sliding, setSliding] = useState(false);
@@ -134,7 +136,14 @@ export default function HeroCopy() {
               justifyContent: isMobile ? "center" : "flex-start",
             }}
           >
-            <button style={styles.contactBtn}>Contact Us</button>
+            <button
+              onClick={() => {
+                navigate("/contact-us");
+              }}
+              style={styles.contactBtn}
+            >
+              Contact Us
+            </button>
             {!isMobile && (
               <button style={styles.exploreBtn}>Explore Tours</button>
             )}
