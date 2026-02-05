@@ -173,6 +173,9 @@ export default function Navbar() {
                             <a href="about.html">About Us</a>
                           </li>
                           <li>
+                            <Link to="/contact-us">Contact Us</Link>
+                          </li>
+                          <li>
                             <a href="destination-details.html">
                               Services
                               <i className="fa-solid fa-chevron-down"></i>
@@ -191,7 +194,7 @@ export default function Navbar() {
                               </li>
                             </ul>
                           </li>
-                          <li>
+                          {/* <li>
                             <a href="tour-details.html">
                               Spiritual Journey
                               <i className="fa-solid fa-chevron-down"></i>
@@ -224,12 +227,15 @@ export default function Navbar() {
                                 <a href="team.html">Work Visa</a>
                               </li>
                             </ul>
-                          </li>
+                          </li> */}
                           <li>
                             <a href="news-details.html">Blog</a>
                           </li>
                           <li>
                             <Link to="/bank-accounts">Bank Accounts</Link>
+                          </li>
+                          <li>
+                            <Link to="/be-partner">Be Partner</Link>
                           </li>
                           <li className="has-dropdown">
                             <a href="contact.html">

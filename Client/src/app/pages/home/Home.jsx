@@ -27,7 +27,7 @@ export default function Home() {
       <TravelFeature />
       <CountriesCarousel />
       <CTA2 />
-      <Blogs />
+      {/* <Blogs /> */}
       <Testimonials />
     </div>
   );
