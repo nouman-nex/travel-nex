@@ -1,7 +1,62 @@
-import React from "react";
+import React, { useState } from "react";
 import PageHeader from "../../components/pageHeader/Pageheader";
+import { api } from "../../api/api";
 
 export default function ContactUs() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    country: "Residential",
+    message: "",
+  });
+
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState({ type: "", text: "" });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setMessage({ type: "", text: "" });
+
+    try {
+      const res = await api.post("v3/mail/sendMail", formData);
+
+      if (res.status === 200 || res.data?.success) {
+        setMessage({
+          type: "success",
+          text: "Message sent successfully! We will get back to you soon.",
+        });
+        // Reset form
+        setFormData({
+          name: "",
+          email: "",
+          country: "Residential",
+          message: "",
+        });
+      }
+    } catch (error) {
+      console.error("Error sending message:", error);
+      const errorMsg =
+        error?.response?.data?.message ||
+        error?.message ||
+        "Failed to send message. Please try again.";
+      setMessage({
+        type: "error",
+        text: errorMsg,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div>
       <PageHeader
@@ -95,7 +150,38 @@ export default function ContactUs() {
                     </h2>
                   </div>
                   <div className="comment-form-wrap">
-                    <form action="#" id="contact-form" method="POST">
+                    <form
+                      onSubmit={handleSubmit}
+                      id="contact-form"
+                      method="POST"
+                    >
+                      {/* Success/Error Message */}
+                      {message.text && (
+                        <div
+                          style={{
+                            padding: "15px 20px",
+                            borderRadius: "5px",
+                            marginBottom: "20px",
+                            fontSize: "14px",
+                            fontWeight: "500",
+                            backgroundColor:
+                              message.type === "success"
+                                ? "#d4edda"
+                                : "#f8d7da",
+                            color:
+                              message.type === "success"
+                                ? "#155724"
+                                : "#721c24",
+                            border:
+                              message.type === "success"
+                                ? "1px solid #c3e6cb"
+                                : "1px solid #f5c6cb",
+                          }}
+                        >
+                          {message.text}
+                        </div>
+                      )}
+
                       <div className="row g-4">
                         <div className="col-lg-6">
                           <div className="form-clt">
@@ -104,6 +190,8 @@ export default function ContactUs() {
                               name="name"
                               id="name"
                               placeholder="Your Name"
+                              value={formData.name}
+                              onChange={handleChange}
                             />
                           </div>
                         </div>
@@ -114,14 +202,19 @@ export default function ContactUs() {
                               name="email"
                               id="email4"
                               placeholder="Your Email"
+                              value={formData.email}
+                              onChange={handleChange}
                             />
                           </div>
                         </div>
                         <div className="col-lg-12">
                           <div className="form-clt">
                             <select
+                              name="country"
                               className="country-select"
                               style={{ display: "none" }}
+                              value={formData.country}
+                              onChange={handleChange}
                             >
                               <option value="Residential">Real Estate</option>
                               <option value="01">01</option>
@@ -135,12 +228,22 @@ export default function ContactUs() {
                               name="message"
                               id="message"
                               placeholder="Your Message"
+                              value={formData.message}
+                              onChange={handleChange}
                             ></textarea>
                           </div>
                         </div>
                         <div className="col-lg-6">
-                          <button type="submit" className="theme-btn">
-                            Submit Massage
+                          <button
+                            type="submit"
+                            className="theme-btn"
+                            disabled={loading}
+                            style={{
+                              opacity: loading ? 0.7 : 1,
+                              cursor: loading ? "not-allowed" : "pointer",
+                            }}
+                          >
+                            {loading ? "Sending..." : "Submit Massage"}
                           </button>
                         </div>
                       </div>

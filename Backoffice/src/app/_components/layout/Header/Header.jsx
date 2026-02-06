@@ -152,14 +152,14 @@ function Header() {
               </Stack>
 
               {/* User Status/Role */}
-              <Chip
+              {/* <Chip
                 label={greenIDStatus ? "Green ID" : "Red ID"}
                 size="small"
                 color={greenIDStatus ? "success" : "error"}
                 variant="outlined"
                 icon={greenIDStatus ? <CheckCircleIcon /> : <CancelIcon />}
                 sx={{ fontSize: "0.75rem", height: 24 }}
-              />
+              /> */}
 
               {/* Online Status Indicator */}
               <Box

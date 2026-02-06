@@ -14,6 +14,7 @@ import { StretchedLayout } from "@app/_layouts/StretchedLayout";
 import { SoloLayout } from "@app/_layouts/SoloLayout";
 import withAuth from "@app/_hoc/withAuth";
 import { Page, NotFound404 } from "@app/_components/_core";
+import ManageBankAccounts from "@app/pages/admin/settings/ManageBankAccounts";
 
 const routes = [
   {
@@ -23,6 +24,11 @@ const routes = [
       {
         path: "",
         element: <Page Component={dashboard} hoc={withAuth} />,
+      },
+      // Admin routes
+      {
+        path: "manageBankAccount",
+        element: <Page Component={ManageBankAccounts} hoc={withAuth} />,
       },
       {
         path: "adminDashboard",

@@ -25,11 +25,14 @@ const iAuthService = async (email, password) => {
   } catch (error) {
     console.error("Auth error:", error);
 
-    throw new Error(
+    // Handle different error response formats from server
+    const errorMessage =
+      error?.response?.data?.error ||
       error?.response?.data?.message ||
-        error?.response?.data?.data?.message ||
-        "Authentication failed",
-    );
+      error?.message ||
+      "Authentication failed";
+
+    throw new Error(errorMessage);
   }
 };
 
@@ -54,6 +57,9 @@ export function AuthProvider({ children }) {
       return response;
     } catch (error) {
       console.error("Login failed", error);
+      // Ensure authentication state is reset on error
+      setIsAuthenticated(false);
+      setUser(false);
       throw error;
     } finally {
       setLoading(false);

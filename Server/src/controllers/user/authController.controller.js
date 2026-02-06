@@ -2,9 +2,13 @@ const User = require("../../models/User");
 const { registerSchema, loginSchema } = require("../../DTOs/userDTOs");
 const bcrypt = require("bcryptjs");
 const JwtService = require("../../services/jwtService.service");
+const cleanReqData = require("../../helpers/cleanReqdata.helper");
 
 const register = async (req, res) => {
-  const { error } = registerSchema.validate(req.body);
+  // Clean request data
+  const cleanedData = cleanReqData(req.body, ["name", "email", "password"]);
+
+  const { error } = registerSchema.validate(cleanedData);
   if (error) {
     return res.status(400).json({
       success: false,
@@ -12,7 +16,7 @@ const register = async (req, res) => {
     });
   }
 
-  const { name, email, password } = req.body;
+  const { name, email, password } = cleanedData;
 
   try {
     // Check if user exists
@@ -58,8 +62,10 @@ const register = async (req, res) => {
 };
 
 const login = async (req, res) => {
-  // Validate input
-  const { error } = loginSchema.validate(req.body);
+  // Clean request data
+  const cleanedData = cleanReqData(req.body, ["email", "password"]);
+
+  const { error } = loginSchema.validate(cleanedData);
   if (error) {
     return res.status(400).json({
       success: false,
@@ -67,7 +73,7 @@ const login = async (req, res) => {
     });
   }
 
-  const { email, password } = req.body;
+  const { email, password } = cleanedData;
 
   try {
     // Check for user
@@ -109,7 +115,7 @@ const login = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       success: false,
-      error: "Server Error",
+      error: error.message || "Server Error",
     });
   }
 };

@@ -11,6 +11,8 @@ const { serverConfigs } = require("./config/vars");
 
 // Route imports
 const authRoutes = require("./routes/user/auth.route");
+const bankAccountRoutes = require("./routes/admin/bankAccount.route");
+const mailRoutes = require("./routes/user/mail.route");
 
 const app = express();
 
@@ -58,6 +60,8 @@ app.get("/health", (req, res) => {
 
 // API routes
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v2/bankAccounts", bankAccountRoutes);
+app.use("/api/v3/mail", mailRoutes);
 
 // Error handling middleware
 app.use(notFound);

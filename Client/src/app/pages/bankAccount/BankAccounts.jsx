@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Building2, Landmark, Copy, Hash, Check } from "lucide-react";
 import PageHeader from "../../components/pageHeader/Pageheader";
+import { api } from "../../api/api";
 
-const bankData = [
+const banks = [
   {
     bankName: "Allied Bank Limited",
     accountTitle: "CFD TRAVEL & TOUR (SMC-PRIVATE) LIMITED",
@@ -39,6 +40,20 @@ const bankData = [
 
 export default function BankAccounts() {
   const [copiedIndex, setCopiedIndex] = React.useState(null);
+  const [bankData, setBankData] = useState([]);
+
+  const fetchBankData = async () => {
+    try {
+      const response = await api.get("/v2/bankAccounts");
+      setBankData(response.data.data);
+    } catch (error) {
+      console.error("Failed to fetch bank data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchBankData();
+  }, []);
 
   const copyToClipboard = (text, index) => {
     navigator.clipboard.writeText(text);
@@ -149,7 +164,7 @@ export default function BankAccounts() {
                         Account Number
                       </p>
                       <p className="text-sm font-bold text-gray-700">
-                        {bank.accountNo}
+                        {bank.accountNumber}
                       </p>
                     </div>
                   </div>

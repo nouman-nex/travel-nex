@@ -19,7 +19,7 @@ import useNotify from "@app/_components/Notification/useNotify";
 
 const validationSchema = Yup.object({
   identifier: Yup.string()
-    .required("Email or Username is required")
+    .required("Email is required")
     .test(
       "is-email-or-username",
       "Must be a valid email or username",
@@ -48,9 +48,14 @@ const LoginForm = () => {
       if (response?.token) {
         notify("Login successful", "success");
         navigate("/");
+      } else {
+        // If no token returned, show error
+        notify("Invalid email or password", "error");
       }
     } catch (error) {
-      notify(error.message || "Login failed", "error");
+      // Show the error message from server
+      const errorMsg = error?.message || "Login failed";
+      notify(errorMsg, "error");
     }
   };
 
@@ -70,7 +75,7 @@ const LoginForm = () => {
             <Grid item xs={12}>
               <TextField
                 fullWidth
-                label="Email or Username"
+                label="Email"
                 id="identifier"
                 name="identifier"
                 value={values.identifier}

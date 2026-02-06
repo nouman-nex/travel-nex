@@ -10,8 +10,10 @@ import {
   TrendingUp,
 } from "lucide-react";
 import PageHeader from "../../components/pageHeader/Pageheader";
+import { api } from "../../api/api";
 
 export default function BeOurPartner() {
+  // Controlled state management
   const [formData, setFormData] = useState({
     agencyName: "",
     contactPerson: "",
@@ -25,6 +27,8 @@ export default function BeOurPartner() {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errors, setErrors] = useState({});
+  const [message, setMessage] = useState(null);
 
   const formFields = [
     {
@@ -109,26 +113,97 @@ export default function BeOurPartner() {
     },
   ];
 
+  // Controlled input change handler
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
+
+    // Update form data
+    setFormData((prevData) => ({
+      ...prevData,
       [name]: value,
     }));
+
+    // Clear error for this field when user starts typing
+    if (errors[name]) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        [name]: "",
+      }));
+    }
   };
 
+  // Validation function
+  const validateForm = () => {
+    const newErrors = {};
+
+    // Validate all required fields
+    Object.keys(formData).forEach((key) => {
+      if (!formData[key] || formData[key].trim() === "") {
+        newErrors[key] = "This field is required";
+      }
+    });
+
+    // Email validation
+    if (
+      formData.emailAddress &&
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.emailAddress)
+    ) {
+      newErrors.emailAddress = "Please enter a valid email address";
+    }
+
+    // Phone validation (basic)
+    if (formData.phoneNumber && formData.phoneNumber.length < 10) {
+      newErrors.phoneNumber = "Please enter a valid phone number";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  // Form submission handler
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Validate form
+    if (!validateForm()) {
+      console.log("❌ Form validation failed");
+      setMessage({
+        type: "error",
+        text: "Please fill all required fields correctly",
+      });
+      return;
+    }
+
     setIsSubmitting(true);
 
-    setTimeout(() => {
-      console.log("=== Partner Registration Form Submitted ===");
-      console.log("Form Data:", formData);
-      console.log("Timestamp:", new Date().toISOString());
-      console.log("==========================================");
+    try {
+      // Map form data to API requirements
+      const payloadData = {
+        name: formData.contactPerson,
+        email: formData.emailAddress,
+        phone: formData.phoneNumber,
+        company: formData.agencyName,
+        message: `
+        Contact Person: ${formData.contactPerson}
+        Address: ${formData.address}
+        DTS License: ${formData.dtsLicense}
+        Business License: ${formData.businessLicense}
+        Primary Region: ${formData.primaryRegion}
+        Monthly Volume: ${formData.monthlyVolume}
+        `,
+      };
 
-      alert("Thank you for your interest! We'll contact you soon.");
+      const response = await api.post("v3/mail/bePartner", payloadData);
 
+      // Show success message
+      setMessage({
+        type: "success",
+        text:
+          response.data.message ||
+          "Thank you for your interest! We'll contact you soon.",
+      });
+
+      // Reset form to initial state
       setFormData({
         agencyName: "",
         contactPerson: "",
@@ -140,9 +215,33 @@ export default function BeOurPartner() {
         primaryRegion: "",
         monthlyVolume: "",
       });
-
+    } catch (error) {
+      console.error("Partnership request error:", error);
+      const errorMsg =
+        error.response?.data?.message || "Failed to submit partnership request";
+      setMessage({
+        type: "error",
+        text: errorMsg,
+      });
+    } finally {
       setIsSubmitting(false);
-    }, 1500);
+    }
+  };
+
+  // Reset form handler (optional)
+  const handleReset = () => {
+    setFormData({
+      agencyName: "",
+      contactPerson: "",
+      emailAddress: "",
+      phoneNumber: "",
+      address: "",
+      dtsLicense: "",
+      businessLicense: "",
+      primaryRegion: "",
+      monthlyVolume: "",
+    });
+    setErrors({});
   };
 
   return (
@@ -231,6 +330,19 @@ export default function BeOurPartner() {
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Success/Error Message */}
+                {message && (
+                  <div
+                    className={`p-4 rounded-lg ${
+                      message.type === "success"
+                        ? "bg-green-50 text-green-800 border border-green-200"
+                        : "bg-red-50 text-red-800 border border-red-200"
+                    }`}
+                  >
+                    {message.text}
+                  </div>
+                )}
+
                 <div className="grid md:grid-cols-2 gap-6">
                   {formFields.map((field) => {
                     const Icon = field.icon;
@@ -246,7 +358,11 @@ export default function BeOurPartner() {
                             value={formData[field.name]}
                             onChange={handleChange}
                             required
-                            className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-cyan-500 focus:outline-none transition-colors bg-white text-gray-800"
+                            className={`w-full px-4 py-3 border-2 rounded-lg focus:outline-none transition-colors bg-white text-gray-800 ${
+                              errors[field.name]
+                                ? "border-red-500 focus:border-red-500"
+                                : "border-gray-200 focus:border-cyan-500"
+                            }`}
                           >
                             {field.options.map((option) => (
                               <option key={option.value} value={option.value}>
@@ -262,8 +378,17 @@ export default function BeOurPartner() {
                             onChange={handleChange}
                             required
                             placeholder={field.placeholder}
-                            className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-cyan-500 focus:outline-none transition-colors text-gray-800 placeholder:text-gray-400"
+                            className={`w-full px-4 py-3 border-2 rounded-lg focus:outline-none transition-colors text-gray-800 placeholder:text-gray-400 ${
+                              errors[field.name]
+                                ? "border-red-500 focus:border-red-500"
+                                : "border-gray-200 focus:border-cyan-500"
+                            }`}
                           />
+                        )}
+                        {errors[field.name] && (
+                          <p className="text-red-500 text-sm mt-1">
+                            {errors[field.name]}
+                          </p>
                         )}
                       </div>
                     );
@@ -271,11 +396,11 @@ export default function BeOurPartner() {
                 </div>
 
                 {/* Submit Button */}
-                <div className="pt-6">
+                <div className="pt-6 flex gap-4">
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="newsletter-btn theme-btn"
+                    className="newsletter-btn theme-btn flex-1"
                   >
                     {isSubmitting ? (
                       <span className="flex items-center justify-center">
@@ -304,6 +429,15 @@ export default function BeOurPartner() {
                     ) : (
                       "Submit Application"
                     )}
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={handleReset}
+                    disabled={isSubmitting}
+                    className="px-6 py-3 border-2 border-gray-300 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    Reset
                   </button>
                 </div>
 
