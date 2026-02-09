@@ -135,9 +135,26 @@ const getMe = async (req, res) => {
     });
   }
 };
+const updateProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    user.name = req.body.name || user.name;
+    await user.save();
+    res.status(200).json({
+      success: true,
+      data: user,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: "Server Error",
+    });
+  }
+};
 
 module.exports = {
   register,
   login,
   getMe,
+  updateProfile,
 };

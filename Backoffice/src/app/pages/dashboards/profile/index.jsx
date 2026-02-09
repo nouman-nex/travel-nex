@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import { ContentLayout } from "@app/_layouts/ContentLayout";
 import { ASSET_IMAGES } from "@app/_utilities/constants/paths";
 import { getAssetPath } from "@app/_utilities/helpers";

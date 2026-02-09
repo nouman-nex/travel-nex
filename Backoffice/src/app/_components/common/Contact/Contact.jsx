@@ -17,7 +17,8 @@ import { useTranslation } from "react-i18next";
 
 const Contacts = () => {
   const { User } = useAuth();
-  const { t } = useTranslation()
+  console.log(User);
+  const { t } = useTranslation();
 
   return (
     <JumboCard title={t("contact")}>
@@ -52,16 +53,14 @@ const Contacts = () => {
           <ListItemText
             primary={
               <Typography variant="body1" color="text.secondary">
-                {t("form.username")}
+                Name
               </Typography>
             }
             secondary={
               <Link variant="body1" href="#" underline="none">
-                {User && Array.isArray(User.roles) && User.roles.length > 0 && (
-                  <Typography variant="body1" color="text.primary">
-                    {User.username}
-                  </Typography>
-                )}
+                <Typography variant="body1" color="text.primary">
+                  {User.name}
+                </Typography>
               </Link>
             }
           />

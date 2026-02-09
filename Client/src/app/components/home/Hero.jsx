@@ -1,7 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+import { Loader2 } from "lucide-react";
+import { api } from "../../api/api";
 
-const slides = [
+const FALLBACK_SLIDES = [
   {
     id: 1,
     image: "https://ex-coders.com/html/turmet/assets/img/hero/01.jpg",
@@ -28,17 +30,54 @@ const slides = [
     description:
       "Experience luxury, culture, and adventure — all in one seamless journey.",
   },
+  {
+    id: 4,
+    image:
+      "https://wallpapers.com/images/hd/calm-madina-sharif-in-morning-6xqtsqgb36yslnxd.jpg",
+    subtitle: "Travel With Us",
+    title: "Get unforgettable pleasure with us",
+    description:
+      "Experience luxury, culture, and adventure — all in one seamless journey.",
+  },
 ];
 
 export default function HeroCopy() {
   const navigate = useNavigate();
+  const [slides, setSlides] = useState(FALLBACK_SLIDES);
   const [current, setCurrent] = useState(0);
   const [prev, setPrev] = useState(null);
   const [sliding, setSliding] = useState(false);
   const [direction, setDirection] = useState("next");
   const [contentKey, setContentKey] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const [loading, setIsLoading] = useState(true);
   const timeoutRef = useRef(null);
+
+  // Memoized fetch function
+  const fetchSlides = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const res = await api.get("/v5/dashboard/hero");
+      const backendImages = res.data?.data?.images;
+
+      if (backendImages && backendImages.length > 0) {
+        const updatedSlides = FALLBACK_SLIDES.map((slide, index) => ({
+          ...slide,
+          image: backendImages[index] || slide.image,
+        }));
+        setSlides(updatedSlides);
+      }
+    } catch (error) {
+      console.error("Failed to fetch hero images, using fallbacks:", error);
+      setSlides(FALLBACK_SLIDES);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchSlides();
+  }, [fetchSlides]);
 
   // Handle Responsiveness via JS
   useEffect(() => {
@@ -93,6 +132,14 @@ export default function HeroCopy() {
         direction === "next" ? "translateX(100%)" : "translateX(-100%)",
     };
   };
+
+  if (loading) {
+    return (
+      <div className="flex h-[60vh] w-full items-center justify-center">
+        <Loader2 className="h-10 w-10 animate-spin text-blue-500" />
+      </div>
+    );
+  }
 
   return (
     <section style={styles.section}>
