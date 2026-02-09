@@ -10,19 +10,17 @@ import {
   Alert,
   IconButton,
 } from "@mui/material";
-import { getAssetPath } from "@app/_utilities/helpers";
 import { ContentHeader } from "@app/_components/ContentHeader";
 import { useAuth } from "@app/_components/_core/AuthProvider/hooks";
-import {
-  MEDIA_BASE_URL,
-  postRequest,
-} from "../../../../backendServices/ApiCalls";
 import CloseIcon from "@mui/icons-material/Close";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import SaveIcon from "@mui/icons-material/Save";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
+import { uploadToCloudinary } from "../../../../utils/uploadToCloudinary";
+import { api } from "../../../../backendServices/ApiCalls";
+
 const modalStyle = {
   position: "absolute",
   top: "50%",
@@ -42,7 +40,7 @@ const ProfileHeader = () => {
   const [previewUrl, setPreviewUrl] = useState(null);
   const [loading, setLoading] = useState(false);
   const [uploadLoading, setUploadLoading] = useState(false);
-  const [uploadedMediaUrl, setUploadedMediaUrl] = useState(null);
+  const [uploadedCloudinaryUrl, setUploadedCloudinaryUrl] = useState(null);
   const [notification, setNotification] = useState({
     open: false,
     message: "",
@@ -55,19 +53,18 @@ const ProfileHeader = () => {
     setOpen(false);
     setSelectedFile(null);
     setPreviewUrl(null);
-    setUploadedMediaUrl(null);
+    setUploadedCloudinaryUrl(null);
   };
 
   const handleFileSelect = (e) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
 
-      // Validate file type based on backend allowed types
-      if (!["image/png", "image/jpeg", "video/mp4"].includes(file.type)) {
+      // Validate file type
+      if (!["image/png", "image/jpeg", "image/jpg"].includes(file.type)) {
         setNotification({
           open: true,
-          message:
-            "Invalid file type. Only PNG, JPEG, and MP4 files are allowed.",
+          message: "Invalid file type. Only PNG and JPEG files are allowed.",
           severity: "error",
         });
         return;
@@ -92,53 +89,43 @@ const ProfileHeader = () => {
       };
       reader.readAsDataURL(file);
 
-      // Automatically upload the file as soon as it's selected
-      uploadMedia(file);
+      // Automatically upload to Cloudinary
+      uploadToCloudinaryHandler(file);
     }
   };
 
-  // Function to upload media file
-  const uploadMedia = (file) => {
-    setUploadLoading(true);
+  // Upload to Cloudinary
+  const uploadToCloudinaryHandler = async (file) => {
+    try {
+      setUploadLoading(true);
 
-    const formData = new FormData();
-    formData.append("media", file);
+      const cloudinaryUrl = await uploadToCloudinary(file);
 
-    postRequest(
-      "/upload",
-      formData,
-      (response) => {
-        console.log("Media upload response:", response.data);
-
-        if (response.data.success) {
-          // Get and store the uploaded media URL
-          const mediaUrl = response.data.data.mediaUrl;
-          setUploadedMediaUrl(mediaUrl);
-
-          setNotification({
-            open: true,
-            message: "Image uploaded successfully. Click Update to save.",
-            severity: "success",
-          });
-        } else {
-          throw new Error(response.data.message || "Error uploading media");
-        }
-        setUploadLoading(false);
-      },
-      (error) => {
-        console.error("Error uploading media:", error);
+      if (cloudinaryUrl) {
+        setUploadedCloudinaryUrl(cloudinaryUrl);
         setNotification({
           open: true,
-          message: error.response?.data?.message || "Error uploading media",
-          severity: "error",
+          message: "Image uploaded successfully. Click Save to update.",
+          severity: "success",
         });
-        setUploadLoading(false);
+      } else {
+        throw new Error("Failed to get Cloudinary URL");
       }
-    );
+    } catch (error) {
+      console.error("Error uploading to Cloudinary:", error);
+      setNotification({
+        open: true,
+        message: error.message || "Error uploading image to Cloudinary",
+        severity: "error",
+      });
+    } finally {
+      setUploadLoading(false);
+    }
   };
 
+  // Update profile with new avatar
   const handleImageUpdate = async () => {
-    if (!uploadedMediaUrl) {
+    if (!uploadedCloudinaryUrl) {
       setNotification({
         open: true,
         message: "Please wait for the image to upload completely.",
@@ -149,67 +136,45 @@ const ProfileHeader = () => {
 
     try {
       setLoading(true);
-      updateUserProfileImage(uploadedMediaUrl);
-    } catch (error) {
-      console.error("Error in profile update process:", error);
-      setNotification({
-        open: true,
-        message: error.message || "Error updating profile picture",
-        severity: "error",
-      });
-      setLoading(false);
-    }
-  };
 
-  // Function to update user profile with the media URL
-  const updateUserProfileImage = (mediaUrl) => {
-    if (!User?._id) {
-      setNotification({
-        open: true,
-        message: "User ID not available",
-        severity: "error",
+      const res = await api.post("/v1/auth/updateProfile", {
+        avatar: uploadedCloudinaryUrl,
       });
-      setLoading(false);
-      return;
-    }
 
-    // Make API call to update user profile with the new image URL
-    postRequest(
-      "/updateProfileImage",
-      {
-        userId: User._id,
-        filePath: mediaUrl.replace(/^\/uploads\//, ""),
-      },
-      (response) => {
-        console.log("Profile update response:", response);
-        setUser(response?.data?.user);
-        // Handle successful response
+      if (res?.data?.success) {
+        // Update user in context with new avatar
+        const updatedUser = {
+          ...User,
+          avatar: uploadedCloudinaryUrl,
+          profilePic: uploadedCloudinaryUrl,
+          profileImg: uploadedCloudinaryUrl,
+        };
+        setUser(updatedUser);
+
         setNotification({
           open: true,
           message: "Profile picture updated successfully",
           severity: "success",
         });
 
-        // Update user information in context
+        // Refresh user data if needed
         if (typeof refreshUser === "function") {
           refreshUser();
         }
 
         handleClose();
-        setLoading(false);
-      },
-      (error) => {
-        console.error("Error updating profile with new image:", error);
-        setNotification({
-          open: true,
-          message:
-            error.response?.data?.message ||
-            "Error updating profile with new image",
-          severity: "error",
-        });
-        setLoading(false);
       }
-    );
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      setNotification({
+        open: true,
+        message:
+          error.response?.data?.message || "Error updating profile picture",
+        severity: "error",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleCloseNotification = () => {
@@ -217,9 +182,7 @@ const ProfileHeader = () => {
   };
 
   const getProfileImageUrl = () => {
-    const imagePath = User?.profilePic || User?.profileImg;
-
-    return `${MEDIA_BASE_URL}/${imagePath}`;
+    return User?.avatar || User?.profilePic || User?.profileImg || "";
   };
 
   return (
@@ -232,7 +195,9 @@ const ProfileHeader = () => {
                 width: { xs: 48, sm: 80 },
                 height: { xs: 48, sm: 80 },
               }}
-              alt={`${User?.firstname || ""} ${User?.lastname || ""}`}
+              alt={`${User?.name || User?.firstname || ""} ${
+                User?.lastname || ""
+              }`}
               src={getProfileImageUrl()}
             />
             <Box
@@ -253,7 +218,8 @@ const ProfileHeader = () => {
         }
         title={
           <Typography fontSize={18} variant={"body1"} color={"inherit"}>
-            {User?.firstname || ""} {User?.lastname || ""}
+            {User?.name || User?.firstname || ""}{" "}
+            {User?.lastname ? User.lastname : ""}
           </Typography>
         }
         subheader={
@@ -263,7 +229,7 @@ const ProfileHeader = () => {
             color={"inherit"}
             mt={0.5}
           >
-            {User?.username || ""}
+            {User?.username || User?.email || ""}
           </Typography>
         }
         sx={{
@@ -356,7 +322,9 @@ const ProfileHeader = () => {
                   boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
                   border: "4px solid #fff",
                 }}
-                alt={`${User?.firstname || ""} ${User?.lastname || ""}`}
+                alt={`${User?.name || User?.firstname || ""} ${
+                  User?.lastname || ""
+                }`}
                 src={previewUrl || getProfileImageUrl()}
               />
             </Box>
@@ -392,7 +360,7 @@ const ProfileHeader = () => {
               <input
                 type="file"
                 hidden
-                accept="image/png,image/jpeg,image/jpg,video/mp4"
+                accept="image/png,image/jpeg,image/jpg"
                 onChange={handleFileSelect}
                 disabled={uploadLoading}
               />
@@ -417,7 +385,7 @@ const ProfileHeader = () => {
               </Box>
             )}
 
-            {uploadedMediaUrl && (
+            {uploadedCloudinaryUrl && (
               <Box
                 sx={{
                   mt: 2,
@@ -463,7 +431,7 @@ const ProfileHeader = () => {
             <Button
               onClick={handleImageUpdate}
               variant="contained"
-              disabled={!uploadedMediaUrl || loading || uploadLoading}
+              disabled={!uploadedCloudinaryUrl || loading || uploadLoading}
               startIcon={
                 loading ? <CircularProgress size={20} /> : <SaveIcon />
               }
@@ -473,7 +441,7 @@ const ProfileHeader = () => {
                 textTransform: "none",
                 fontWeight: 600,
                 background:
-                  !uploadedMediaUrl || loading || uploadLoading
+                  !uploadedCloudinaryUrl || loading || uploadLoading
                     ? "grey.400"
                     : "primary.main",
                 boxShadow: "0 4px 10px rgba(0,0,0,0.1)",

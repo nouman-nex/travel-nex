@@ -139,6 +139,7 @@ const updateProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
     user.name = req.body.name || user.name;
+    user.avatar = req.body.avatar || user.avatar;
     await user.save();
     res.status(200).json({
       success: true,

@@ -50,33 +50,6 @@ const AuthUserPopover = () => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [loadingUsers, setLoadingUsers] = useState(false);
 
-  // // Fetch all user accounts
-  // const fetchUserAccounts = () => {
-  //   setLoadingUsers(true);
-  //   postRequest(
-  //     "/getAllAccountsOfUser",
-  //     {},
-  //     (response) => {
-  //       if (response.data) {
-  //         setUsersData(response.data);
-  //       } else {
-  //         toast.error("Failed to fetch user accounts");
-  //       }
-  //       setLoadingUsers(false);
-  //     },
-  //     (error) => {
-  //       toast.error("Error fetching user accounts");
-  //       setLoadingUsers(false);
-  //     }
-  //   );
-  // };
-
-  // // Load users when component mounts
-  // useEffect(() => {
-  //   fetchUserAccounts();
-  // }, []);
-
-  // Handle logout
   async function handleLogout() {
     await logout();
     return navigate("/auth/login");
@@ -103,7 +76,7 @@ const AuthUserPopover = () => {
       (response) => {
         if (response.data) {
           toast.success(
-            `Successfully logged in as ${selectedUser?.username || selectedUser?.firstname || "user"}`
+            `Successfully logged in as ${selectedUser?.username || selectedUser?.firstname || "user"}`,
           );
           localStorage.setItem("token", response.data.token);
           setTimeout(() => window.location.reload(), 1000);
@@ -114,10 +87,10 @@ const AuthUserPopover = () => {
       },
       (error) => {
         toast.error(
-          error?.response?.data?.message || "Failed to login as user"
+          error?.response?.data?.message || "Failed to login as user",
         );
         setIsLoading(false);
-      }
+      },
     );
   };
 
@@ -132,7 +105,7 @@ const AuthUserPopover = () => {
       <JumboDdPopover
         triggerButton={
           <Avatar
-            src={`${MEDIA_BASE_URL}/${User?.profileImg}`}
+            src={User?.avatar}
             sizes={"small"}
             sx={{ boxShadow: 23, cursor: "pointer" }}
           />
@@ -148,7 +121,7 @@ const AuthUserPopover = () => {
           }}
         >
           <Avatar
-            src={`${MEDIA_BASE_URL}/${User?.profileImg}`}
+            src={User.avatar}
             alt={User?.firstname}
             sx={{ width: 60, height: 60, mb: 2 }}
           />
