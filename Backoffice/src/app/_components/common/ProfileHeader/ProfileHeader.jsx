@@ -99,7 +99,10 @@ const ProfileHeader = () => {
     try {
       setUploadLoading(true);
 
-      const cloudinaryUrl = await uploadToCloudinary(file);
+      const cloudinaryUrl = await uploadToCloudinary(
+        file,
+        "travel-agency/avatars",
+      );
 
       if (cloudinaryUrl) {
         setUploadedCloudinaryUrl(cloudinaryUrl);
