@@ -17,7 +17,6 @@ import useNotify from "@app/_components/Notification/useNotify";
 import { useTranslation } from "react-i18next";
 import { postRequest } from "../../../../../../backendServices/ApiCalls";
 
-
 const ResetPasswordSettings = () => {
   const { t } = useTranslation();
   const notify = useNotify();
@@ -37,7 +36,9 @@ const ResetPasswordSettings = () => {
 
   // Password validation schema using Yup
   const validationSchema = Yup.object({
-    currentPassword: Yup.string().required(t("validation.currentPasswordRequired")),
+    currentPassword: Yup.string().required(
+      t("validation.currentPasswordRequired"),
+    ),
     newPassword: Yup.string()
       .min(6, t("validation.passwordMin"))
       .required(t("validation.newPasswordRequired")),
@@ -45,7 +46,6 @@ const ResetPasswordSettings = () => {
       .oneOf([Yup.ref("newPassword"), null], t("validation.passwordsMustMatch"))
       .required(t("validation.confirmPasswordRequired")),
   });
-
 
   const handleSubmit = (values, { resetForm }) => {
     // console.log("🚀 ~ handleSubmit ~ values:", values)
@@ -65,7 +65,7 @@ const ResetPasswordSettings = () => {
       (error) => {
         console.log(error);
         setLoading(false); // Set loading state to false in case of error
-      }
+      },
     );
   };
 
@@ -114,16 +114,25 @@ const ResetPasswordSettings = () => {
                       label={t("changePasswordForm.currentPassword")}
                       size="small"
                       fullWidth
-                      error={touched.currentPassword && Boolean(errors.currentPassword)}
+                      error={
+                        touched.currentPassword &&
+                        Boolean(errors.currentPassword)
+                      }
                       helperText={<ErrorMessage name="currentPassword" />}
                       InputProps={{
                         endAdornment: (
                           <InputAdornment position="end">
                             <IconButton
-                              onClick={() => handleClickShowPassword("currentPassword")}
+                              onClick={() =>
+                                handleClickShowPassword("currentPassword")
+                              }
                               edge="end"
                             >
-                              {showPassword.currentPassword ? <Visibility /> : <VisibilityOff />}
+                              {showPassword.currentPassword ? (
+                                <Visibility />
+                              ) : (
+                                <VisibilityOff />
+                              )}
                             </IconButton>
                           </InputAdornment>
                         ),
@@ -143,10 +152,16 @@ const ResetPasswordSettings = () => {
                         endAdornment: (
                           <InputAdornment position="end">
                             <IconButton
-                              onClick={() => handleClickShowPassword("newPassword")}
+                              onClick={() =>
+                                handleClickShowPassword("newPassword")
+                              }
                               edge="end"
                             >
-                              {showPassword.newPassword ? <Visibility /> : <VisibilityOff />}
+                              {showPassword.newPassword ? (
+                                <Visibility />
+                              ) : (
+                                <VisibilityOff />
+                              )}
                             </IconButton>
                           </InputAdornment>
                         ),
@@ -160,16 +175,25 @@ const ResetPasswordSettings = () => {
                       label={t("changePasswordForm.confirmPassword")}
                       size="small"
                       fullWidth
-                      error={touched.confirmPassword && Boolean(errors.confirmPassword)}
+                      error={
+                        touched.confirmPassword &&
+                        Boolean(errors.confirmPassword)
+                      }
                       helperText={<ErrorMessage name="confirmPassword" />}
                       InputProps={{
                         endAdornment: (
                           <InputAdornment position="end">
                             <IconButton
-                              onClick={() => handleClickShowPassword("confirmPassword")}
+                              onClick={() =>
+                                handleClickShowPassword("confirmPassword")
+                              }
                               edge="end"
                             >
-                              {showPassword.confirmPassword ? <Visibility /> : <VisibilityOff />}
+                              {showPassword.confirmPassword ? (
+                                <Visibility />
+                              ) : (
+                                <VisibilityOff />
+                              )}
                             </IconButton>
                           </InputAdornment>
                         ),
@@ -185,7 +209,7 @@ const ResetPasswordSettings = () => {
                         color: "#fff",
                         fontWeight: 500,
                         background:
-                          "linear-gradient(to right, #AC9B6D, #8B7550, #6A5637)",
+                          "linear-gradient(to right, #7DD3FC, #8B7550, #0EA5E9)",
                         borderRadius: "0.5rem",
                         transition: "all 0.3s ease",
                         "&:hover": {
@@ -199,7 +223,6 @@ const ResetPasswordSettings = () => {
                     </LoadingButton>
                   </Div>
                 </Form>
-
               )}
             </Formik>
           </Div>

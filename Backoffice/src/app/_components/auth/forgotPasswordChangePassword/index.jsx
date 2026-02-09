@@ -38,10 +38,10 @@ const ForgotPasswordChangePassword = ({ linkToken }) => {
         console.error("Error:", error);
         notify(
           error?.response?.data?.message || "Something went wrong.",
-          "error"
+          "error",
         );
         setSubmitting(false);
-      }
+      },
     );
   };
 
@@ -96,13 +96,13 @@ const ForgotPasswordChangePassword = ({ linkToken }) => {
                   variant="contained"
                   color="primary"
                   sx={{
-                    boxShadow: 'none',
+                    boxShadow: "none",
                     pt: 1,
                     px: 3,
-                    color: 'white',
-                    background: 'linear-gradient(to right, #AC9B6D, #6A5637)',
-                    '&:hover': {
-                      background: 'linear-gradient(to right, #BFA670, #7A5F3A)',
+                    color: "white",
+                    background: "linear-gradient(to right, #7DD3FC, #0EA5E9)",
+                    "&:hover": {
+                      background: "linear-gradient(to right, #BFA670, #7A5F3A)",
                     },
                   }}
                   disabled={submitting}

@@ -13,18 +13,24 @@ export function getMenus() {
       path: "/adminDashboard",
     },
     {
+      label: "Partnership Requests",
+      icon: "onboarding-1",
+      path: "/partnershipRequests",
+    },
+    {
       label: t("Users"),
       collapsible: true,
       icon: "profile-4",
       children: [
         { path: "/activeUsers", label: t("Active ") },
-        { path: "/inactiveUsers", label: t("Inactive ") },
+        // { path: "/inactiveUsers", label: t("Inactive ") },
       ],
     },
     {
-      label: "Partnership Requests",
-      icon: "onboarding-1",
-      path: "/partnershipRequests",
+      label: t("CMS Settings"),
+      collapsible: true,
+      icon: "settings",
+      children: [{ path: "/manageHero", label: t("Hero Section") }],
     },
     {
       label: t("Settings"),

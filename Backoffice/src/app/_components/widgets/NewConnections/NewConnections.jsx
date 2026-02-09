@@ -41,7 +41,7 @@ function NewConnections({
           }}
           variant={"contained"}
           size={"small"}
-          className="bg-gradient-to-r from-[#AC9B6D] via-[#8B7550] to-[#6A5637]"
+          className="bg-gradient-to-r from-[#7DD3FC] via-[#8B7550] to-[#0EA5E9]"
         >
           {t("dashboard.seeAll")}
         </Button>

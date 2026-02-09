@@ -48,7 +48,7 @@ export default function UserProfile() {
       (error) => {
         console.error(error);
         setLoading(false);
-      }
+      },
     );
   };
 
@@ -150,7 +150,7 @@ export default function UserProfile() {
                           color: "#fff",
                           fontWeight: 500,
                           background:
-                            "linear-gradient(to right, #AC9B6D, #8B7550, #6A5637)",
+                            "linear-gradient(to right, #7DD3FC, #8B7550, #0EA5E9)",
                           borderRadius: "0.5rem",
                           transition: "all 0.3s ease",
                           "&:hover": {

@@ -92,7 +92,7 @@ const useProfileLayout = () => {
         },
       },
     }),
-    [theme]
+    [theme],
   );
 };
 
@@ -160,11 +160,7 @@ const Profile = () => {
       .writeText(text)
       .then(() => {
         // Snackbar or Sweet Alert
-        sweetAlerts(
-          "success",
-          t("dashboard.success"),
-          t("dashboard.success")
-        );
+        sweetAlerts("success", t("dashboard.success"), t("dashboard.success"));
       })
       .catch((err) => {
         sweetAlerts("error", "Error", "Something went wrong.");
@@ -172,10 +168,7 @@ const Profile = () => {
   };
   return (
     <>
-      <ContentLayout
-        header={<ProfileHeader />}
-        {...profileLayoutOptions}
-      >
+      <ContentLayout header={<ProfileHeader />} {...profileLayoutOptions}>
         <Box
           sx={{
             display: "flex",
@@ -248,7 +241,7 @@ const Profile = () => {
                         }
                         sx={{
                           background:
-                            "linear-gradient(to right, #AC9B6D, #8B7550, #6A5637)",
+                            "linear-gradient(to right, #7DD3FC, #8B7550, #0EA5E9)",
                           "&:hover": {
                             background:
                               "linear-gradient(to right, #BFA670, #9C7F52, #7A5F3A)",

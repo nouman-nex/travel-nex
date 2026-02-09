@@ -45,44 +45,42 @@ const SignupForm = () => {
     return <Navigate to="/" />;
   }
 
-const formik = useFormik({
-  initialValues: {
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    phone: "",
-  },
-  validationSchema,
-  onSubmit: async (values, { setSubmitting }) => {
-    setLoading(true);
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      phone: "",
+    },
+    validationSchema,
+    onSubmit: async (values, { setSubmitting }) => {
+      setLoading(true);
 
-    try {
-      const { confirmPassword, ...dataToSend } = values;
+      try {
+        const { confirmPassword, ...dataToSend } = values;
 
-      const response = await api.post("/v1/auth/register", dataToSend);
+        const response = await api.post("/v1/auth/register", dataToSend);
 
-      if (response.data?.success) {
-        localStorage.setItem("token", response.data.data.token);
-        setUser(response.data.data.user);
-        setIsAuthenticated(true);
-        toast.success("You have been Registered");
-        navigate("/");
-      } else {
-        toast.error(response.data?.error || "Signup failed!");
+        if (response.data?.success) {
+          localStorage.setItem("token", response.data.data.token);
+          setUser(response.data.data.user);
+          setIsAuthenticated(true);
+          toast.success("You have been Registered");
+          navigate("/");
+        } else {
+          toast.error(response.data?.error || "Signup failed!");
+        }
+      } catch (error) {
+        toast.error(
+          error.response?.data?.error || "Signup failed! Please try again.",
+        );
+      } finally {
+        setLoading(false);
+        setSubmitting(false);
       }
-    } catch (error) {
-      toast.error(
-        error.response?.data?.error ||
-          "Signup failed! Please try again."
-      );
-    } finally {
-      setLoading(false);
-      setSubmitting(false);
-    }
-  },
-});
-
+    },
+  });
 
   // Check if form is valid
   const isFormDisabled = formik.isSubmitting || loading;
@@ -194,7 +192,7 @@ const formik = useFormik({
                 pt: 1,
                 px: 3,
                 color: "white",
-                background: "linear-gradient(to right, #AC9B6D, #6A5637)",
+                background: "linear-gradient(to right, #7DD3FC, #0EA5E9)",
                 "&:hover": {
                   background: "linear-gradient(to right, #BFA670, #7A5F3A)",
                 },

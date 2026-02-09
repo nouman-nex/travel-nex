@@ -151,7 +151,7 @@ const LoginForm = () => {
                   pt: 1,
                   px: 3,
                   color: "white",
-                  background: "linear-gradient(to right, #AC9B6D, #6A5637)",
+                  background: "linear-gradient(to right, #7DD3FC, #0EA5E9)",
                   "&:hover": {
                     background: "linear-gradient(to right, #BFA670, #7A5F3A)",
                   },

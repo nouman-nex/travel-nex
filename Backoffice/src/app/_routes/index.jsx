@@ -17,6 +17,7 @@ import { Page, NotFound404 } from "@app/_components/_core";
 import ManageBankAccounts from "@app/pages/admin/settings/ManageBankAccounts";
 import PartnerShip from "@app/pages/admin/Partnership/PartnerShip";
 import ActiveUser from "@app/pages/admin/users/ActiveUser";
+import ManageHero from "@app/pages/admin/cms/ManageHero";
 
 const routes = [
   {
@@ -39,6 +40,10 @@ const routes = [
       {
         path: "activeUsers",
         element: <Page Component={ActiveUser} hoc={withAuth} />,
+      },
+      {
+        path: "manageHero",
+        element: <Page Component={ManageHero} hoc={withAuth} />,
       },
       {
         path: "adminDashboard",

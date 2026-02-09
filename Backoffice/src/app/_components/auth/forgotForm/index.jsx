@@ -59,10 +59,10 @@ const ForgotForm = () => {
         console.error("Error:", error);
         notify(
           error?.response?.data?.message || "Something went wrong.",
-          "error"
+          "error",
         );
         setIsSubmitting(false);
-      }
+      },
     );
   };
 
@@ -134,17 +134,17 @@ const ForgotForm = () => {
         if (error?.response?.status === 400) {
           notify(
             error?.response?.data?.message || "Invalid OTP or email.",
-            "error"
+            "error",
           );
         } else if (error?.response?.status === 500) {
           notify("Server error. Please try again later.", "error");
         } else {
           notify(
             "Something went wrong. Please check your connection.",
-            "error"
+            "error",
           );
         }
-      }
+      },
     );
   };
 
@@ -177,7 +177,7 @@ const ForgotForm = () => {
         console.error("Error:", error);
         setIsOtpSubmitting(false);
         notify("Something went wrong. Please try again.", "error");
-      }
+      },
     );
   };
 
@@ -271,7 +271,7 @@ const ForgotForm = () => {
                   pt: 1,
                   px: 3,
                   color: "white",
-                  background: "linear-gradient(to right, #AC9B6D, #6A5637)",
+                  background: "linear-gradient(to right, #7DD3FC, #0EA5E9)",
                   "&:hover": {
                     background: "linear-gradient(to right, #BFA670, #7A5F3A)",
                   },

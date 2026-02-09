@@ -33,7 +33,6 @@ export default function ManageWalletAddress() {
       .required(t("validation.walletRequired")),
   });
 
-
   const walletData = {
     bep20: User?.bepWalletAddress || "",
     trc20: User?.trcWalletAddress || "",
@@ -83,7 +82,7 @@ export default function ManageWalletAddress() {
       (error) => {
         console.error(error);
         setLoading(false);
-      }
+      },
     );
   };
 
@@ -173,7 +172,10 @@ export default function ManageWalletAddress() {
                           onChange={(e) => {
                             const selected = e.target.value;
                             setFieldValue("network", selected);
-                            setFieldValue("walletAddress", walletData[selected]);
+                            setFieldValue(
+                              "walletAddress",
+                              walletData[selected],
+                            );
                           }}
                         >
                           {networks.map((net) => (
@@ -198,15 +200,21 @@ export default function ManageWalletAddress() {
                         size="small"
                         fullWidth
                         value={values.walletAddress}
-                        onChange={(e) => setFieldValue("walletAddress", e.target.value)}
+                        onChange={(e) =>
+                          setFieldValue("walletAddress", e.target.value)
+                        }
                         disabled={!values.network}
-                        error={touched.walletAddress && Boolean(errors.walletAddress)}
+                        error={
+                          touched.walletAddress && Boolean(errors.walletAddress)
+                        }
                         helperText={<ErrorMessage name="walletAddress" />}
                         multiline
                         rows={2}
                         placeholder={
                           values.network
-                            ? t("withdraw.walletPlaceholder", { network: values.network.toUpperCase() })
+                            ? t("withdraw.walletPlaceholder", {
+                                network: values.network.toUpperCase(),
+                              })
                             : t("withdraw.selectNetworkFirst")
                         }
                       />
@@ -221,11 +229,13 @@ export default function ManageWalletAddress() {
                         sx={{
                           color: "#fff",
                           fontWeight: 500,
-                          background: "linear-gradient(to right, #AC9B6D, #8B7550, #6A5637)",
+                          background:
+                            "linear-gradient(to right, #7DD3FC, #8B7550, #0EA5E9)",
                           borderRadius: "0.5rem",
                           transition: "all 0.3s ease",
                           "&:hover": {
-                            background: "linear-gradient(to right, #BFA670, #9C7F52, #7A5F3A)",
+                            background:
+                              "linear-gradient(to right, #BFA670, #9C7F52, #7A5F3A)",
                           },
                         }}
                       >
@@ -234,7 +244,6 @@ export default function ManageWalletAddress() {
                     </Grid>
                   </Grid>
                 </Form>
-
               );
             }}
           </Formik>
