@@ -22,6 +22,11 @@ export function getMenus() {
       ],
     },
     {
+      label: "Partnership Requests",
+      icon: "onboarding-1",
+      path: "/partnershipRequests",
+    },
+    {
       label: t("Settings"),
       collapsible: true,
       icon: "settings",

@@ -13,6 +13,7 @@ const { serverConfigs } = require("./config/vars");
 const authRoutes = require("./routes/user/auth.route");
 const bankAccountRoutes = require("./routes/admin/bankAccount.route");
 const mailRoutes = require("./routes/user/mail.route");
+const partnerRoute = require("./routes/admin/partner.route");
 
 const app = express();
 
@@ -62,6 +63,7 @@ app.get("/health", (req, res) => {
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v2/bankAccounts", bankAccountRoutes);
 app.use("/api/v3/mail", mailRoutes);
+app.use("/api/v4/partners", partnerRoute);
 
 // Error handling middleware
 app.use(notFound);

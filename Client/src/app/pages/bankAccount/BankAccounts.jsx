@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Building2, Landmark, Copy, Hash, Check } from "lucide-react";
+import { Building2, Landmark, Copy, Hash, Check, Loader2 } from "lucide-react";
 import PageHeader from "../../components/pageHeader/Pageheader";
 import { api } from "../../api/api";
 
@@ -41,13 +41,22 @@ const banks = [
 export default function BankAccounts() {
   const [copiedIndex, setCopiedIndex] = React.useState(null);
   const [bankData, setBankData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const fetchBankData = async () => {
     try {
+      setLoading(true);
       const response = await api.get("/v2/bankAccounts");
-      setBankData(response.data.data);
+      if (response.status == 200) {
+        setBankData(response.data.data);
+      } else {
+        setBankData(banks);
+      }
     } catch (error) {
       console.error("Failed to fetch bank data:", error);
+      setBankData(banks);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -60,6 +69,21 @@ export default function BankAccounts() {
     setCopiedIndex(index);
     setTimeout(() => setCopiedIndex(null), 2000);
   };
+
+  if (loading) {
+    return (
+      <div className="bg-[#f8fafc] min-h-screen font-sans">
+        <PageHeader
+          title={"Bank Accounts"}
+          image={
+            "https://images.unsplash.com/photo-1501167786227-4cba60f6d58f?fm=jpg"
+          }
+          breadcrumb={"Bank Accounts"}
+        />
+        <Loader2 className="animate-spin mx-auto my-16"></Loader2>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-[#f8fafc] min-h-screen font-sans">

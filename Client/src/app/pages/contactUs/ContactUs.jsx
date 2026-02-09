@@ -255,10 +255,12 @@ export default function ContactUs() {
                 <div className="map-area">
                   <div className="google-map">
                     <iframe
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6678.7619084840835!2d144.9618311901502!3d-37.81450084255415!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642b4758afc1d%3A0x3119cc820fdfc62e!2sEnvato!5e0!3m2!1sen!2sbd!4v1641984054261!5m2!1sen!2sbd"
-                      // style="border:0;"
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6678.7619084840835!2d144.9618311901502!3d-37.81450084255415!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642b4758afc1d%3A0x3119cc820fdfc62e!2sEnvato!5e0!3m2!1sen!2sbd!4v1641984054261!5m2!1sen!2sbd5?pb=!1m18!1m12!1m3!1d3369.832943340578!2d74.04342737575635!3d32.84035267363659!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391fca0ad9badbdb%3A0xc14acafc878233a9!2sCFD%20TRADE%20TEST%20%26%20TECHNICAL%20TRAINING%20CENTRE%20(PRIVATE)%20LIMITED!5e0!3m2!1sen!2spk!4v1707474000000!5m2!1sen!2spk"
+                      width="600"
+                      height="450"
                       allowfullscreen=""
                       loading="lazy"
+                      referrerpolicy="no-referrer-when-downgrade"
                     ></iframe>
                   </div>
                 </div>

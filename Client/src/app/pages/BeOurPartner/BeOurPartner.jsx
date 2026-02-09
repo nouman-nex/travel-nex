@@ -183,14 +183,12 @@ export default function BeOurPartner() {
         email: formData.emailAddress,
         phone: formData.phoneNumber,
         company: formData.agencyName,
-        message: `
-        Contact Person: ${formData.contactPerson}
-        Address: ${formData.address}
-        DTS License: ${formData.dtsLicense}
-        Business License: ${formData.businessLicense}
-        Primary Region: ${formData.primaryRegion}
-        Monthly Volume: ${formData.monthlyVolume}
-        `,
+        address: formData.address,
+        dtsLicense: formData.dtsLicense,
+        businessLicense: formData.businessLicense,
+        primaryRegion: formData.primaryRegion,
+        monthlyVolume: formData.monthlyVolume,
+        message: `New partner application from ${formData.agencyName}`,
       };
 
       const response = await api.post("v3/mail/bePartner", payloadData);

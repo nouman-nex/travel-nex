@@ -15,6 +15,8 @@ import { SoloLayout } from "@app/_layouts/SoloLayout";
 import withAuth from "@app/_hoc/withAuth";
 import { Page, NotFound404 } from "@app/_components/_core";
 import ManageBankAccounts from "@app/pages/admin/settings/ManageBankAccounts";
+import PartnerShip from "@app/pages/admin/Partnership/PartnerShip";
+import ActiveUser from "@app/pages/admin/users/ActiveUser";
 
 const routes = [
   {
@@ -27,8 +29,16 @@ const routes = [
       },
       // Admin routes
       {
+        path: "partnershipRequests",
+        element: <Page Component={PartnerShip} hoc={withAuth} />,
+      },
+      {
         path: "manageBankAccount",
         element: <Page Component={ManageBankAccounts} hoc={withAuth} />,
+      },
+      {
+        path: "activeUsers",
+        element: <Page Component={ActiveUser} hoc={withAuth} />,
       },
       {
         path: "adminDashboard",

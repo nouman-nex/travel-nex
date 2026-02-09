@@ -44,7 +44,7 @@ const DataTable = ({
   filterLabel = "Filter",
   onRowClick = null,
   actionButtons = null,
-  exportTransformMode = "normal", // Add new prop for handling export transformation mode
+  exportTransformMode = "normal",
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredData, setFilteredData] = useState([]);
@@ -52,44 +52,56 @@ const DataTable = ({
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  // Inside your DataTable component, update the useEffect that filters data:
+  useEffect(() => {
+    if (!data) return;
 
- // Replace the existing useEffect with this one
-useEffect(() => {
-  if (!data) return;
+    let filtered = [...data];
 
-  let filtered = [...data];
+    if (searchTerm) {
+      const searchLower = searchTerm.toLowerCase();
 
-  // Apply search filter if searchTerm exists
-  if (searchTerm) {
-    filtered = filtered.filter((item) => {
-      const searchTermLower = searchTerm.toLowerCase();
-      
-      // Check sender username
-      const senderUsername = item.senderDetails?.username?.toLowerCase() || '';
-      const senderMatch = senderUsername.includes(searchTermLower);
-      
-      // Check receiver username
-      const receiverUsername = item.receiverDetails?.username?.toLowerCase() || '';
-      const receiverMatch = receiverUsername.includes(searchTermLower);
-      
-      // Check transaction ID as fallback
-      const txIdMatch = item._id?.toLowerCase().includes(searchTermLower);
-      
-      return senderMatch || receiverMatch || txIdMatch;
-    });
-  }
+      filtered = filtered.filter((row) =>
+        columns.some((column) => {
+          // 1️⃣ Use exportValue if provided (best for rendered columns)
+          if (column.exportValue) {
+            const value = column.exportValue(row);
+            return String(value ?? "")
+              .toLowerCase()
+              .includes(searchLower);
+          }
 
-  // Apply status filter if filterValue isn't "All"
-  if (filterValue !== "All" && filterOptions) {
-    filtered = filtered.filter((item) => {
-      return item.status === filterValue;
-    });
-  }
+          // 2️⃣ Handle nested fields (e.g. user.name)
+          if (column.field?.includes(".")) {
+            const parts = column.field.split(".");
+            let value = row;
+            for (const part of parts) {
+              value = value?.[part];
+            }
+            return String(value ?? "")
+              .toLowerCase()
+              .includes(searchLower);
+          }
 
-  setFilteredData(filtered);
-  setPage(0); // Reset to first page when filter changes
-}, [data, searchTerm, filterValue, filterOptions]);
+          // 3️⃣ Normal fields
+          if (column.field && column.field !== "actions") {
+            return String(row[column.field] ?? "")
+              .toLowerCase()
+              .includes(searchLower);
+          }
+
+          return false;
+        }),
+      );
+    }
+
+    // Optional filter dropdown logic
+    if (filterValue !== "All" && filterOptions) {
+      filtered = filtered.filter((item) => item.status === filterValue);
+    }
+
+    setFilteredData(filtered);
+    setPage(0);
+  }, [data, searchTerm, filterValue, filterOptions, columns]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -149,7 +161,7 @@ useEffect(() => {
 
     // Find the column with exportTransform function - this fixes the "transformColumn is not defined" error
     const transformColumn = columns.find(
-      (col) => typeof col.exportTransform === "function"
+      (col) => typeof col.exportTransform === "function",
     );
 
     let csvRows = [];
@@ -198,7 +210,7 @@ useEffect(() => {
             }
 
             return value !== undefined && value !== null ? String(value) : "";
-          })
+          }),
       );
     }
 
@@ -215,7 +227,7 @@ useEffect(() => {
     link.setAttribute("href", url);
     link.setAttribute(
       "download",
-      `${title || "export"}_${new Date().toISOString().split("T")[0]}.csv`
+      `${title || "export"}_${new Date().toISOString().split("T")[0]}.csv`,
     );
     link.style.visibility = "hidden";
     document.body.appendChild(link);
@@ -227,7 +239,7 @@ useEffect(() => {
     <Paper elevation={3} sx={{ p: 3, width: "100%" }}>
       {title && (
         <Box sx={{ mb: 3 }}>
-          <Typography variant="h5" component="h2" >
+          <Typography variant="h5" component="h2">
             {title}
           </Typography>
         </Box>

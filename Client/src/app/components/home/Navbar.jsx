@@ -177,7 +177,7 @@ export default function Navbar() {
                           </li>
                           <li>
                             <a href="destination-details.html">
-                              Services
+                              Our Services
                               <i className="fa-solid fa-chevron-down"></i>
                             </a>
                             <ul className="submenu">
@@ -191,6 +191,34 @@ export default function Navbar() {
                                 <a href="destination-details.html">
                                   Hotel Booking
                                 </a>
+                              </li>
+                              <li>
+                                <a href="destination-details.html">
+                                  Spiritual Visa
+                                </a>
+                              </li>
+                              <li>
+                                <a href="destination-details.html">
+                                  Translation Service
+                                </a>
+                              </li>
+                              <li>
+                                <a href="destination-details.html">
+                                  Attestation Service
+                                </a>
+                              </li>
+                              <li>
+                                <a href="destination-details.html">
+                                  Rent a Car
+                                </a>
+                              </li>
+                              <li>
+                                <a href="destination-details.html">
+                                  Import Japanese Vehicles
+                                </a>
+                              </li>
+                              <li>
+                                <a href="destination-details.html">Others</a>
                               </li>
                             </ul>
                           </li>
@@ -237,7 +265,7 @@ export default function Navbar() {
                           <li>
                             <Link to="/be-partner">Be Partner</Link>
                           </li>
-                          <li className="has-dropdown">
+                          {/* <li className="has-dropdown">
                             <a href="contact.html">
                               Attestation
                               <i className="fa-solid fa-chevron-down"></i>
@@ -250,7 +278,7 @@ export default function Navbar() {
                                 <a href="activities-details.html">Apostille</a>
                               </li>
                             </ul>
-                          </li>
+                          </li> */}
                         </ul>
                       </nav>
                     </div>
