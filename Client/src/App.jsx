@@ -8,6 +8,7 @@ import Navbar from "./app/components/home/Navbar";
 import Footer from "./app/components/home/Footer";
 import ScrollToTop from "./app/components/scroll/ScrollToTop";
 import BeOurPartner from "./app/pages/BeOurPartner/BeOurPartner";
+import NotFound from "./app/pages/404/404";
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/be-partner" element={<BeOurPartner />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
     </Router>
